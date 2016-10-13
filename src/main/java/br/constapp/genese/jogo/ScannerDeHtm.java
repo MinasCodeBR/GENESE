@@ -60,7 +60,7 @@ public class ScannerDeHtm {
                     .collect(Collectors.toList());
 
             listaFiltrada
-                    .removeIf(p -> p.equalsIgnoreCase("&nbsp") || p.equalsIgnoreCase("N�O") || p.equalsIgnoreCase("SIM"));
+                    .removeIf(p -> p.equalsIgnoreCase("&nbsp") || p.equalsIgnoreCase("N�O") || p.equalsIgnoreCase("NÃO") || p.equalsIgnoreCase("SIM"));
 
             listaSorteios = listaFiltrada;
 
