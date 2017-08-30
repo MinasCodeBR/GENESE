@@ -75,8 +75,8 @@ public final class DownloadAndUnzip {
      * @return theFile
      * @throws IOException exception
      */
-
-    private static File unpackArquivo(File theFile, File targetDir) throws IOException {
+    
+	private static File unpackArquivo(File theFile, File targetDir) throws IOException {
 
         if (!theFile.exists()) {
             throw new IOException(theFile.getAbsolutePath() + " não existe");
@@ -84,7 +84,8 @@ public final class DownloadAndUnzip {
         if (!buildDirectory(targetDir)) {
             throw new IOException("Não foi possível criar o diretório: " + targetDir);
         }
-        ZipFile zipFile = new ZipFile(theFile);
+        
+		ZipFile zipFile = new ZipFile(theFile);
         for (Enumeration<? extends ZipEntry> entries = zipFile.entries(); entries.hasMoreElements(); ) {
             ZipEntry entry = entries.nextElement();
             File file = new File(targetDir, File.separator + entry.getName());
@@ -98,9 +99,11 @@ public final class DownloadAndUnzip {
                     throw new IOException("Não foi possível criar o diretório: " + file);
                 }
             }
-        }
+        }        
         zipFile.close();
+        
         System.out.println("Arquivo descompactado em " + targetDir.getAbsolutePath());
+        
         return theFile;
     }
 

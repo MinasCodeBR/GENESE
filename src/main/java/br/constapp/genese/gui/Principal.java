@@ -20,16 +20,11 @@
 package br.constapp.genese.gui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -40,30 +35,31 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.border.TitledBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import br.constapp.genese.analise.Cubicos;
 import br.constapp.genese.gui.guiutils.GuiUtils;
+import br.constapp.genese.gui.model.ModeloTabelaAnalises;
 import br.constapp.genese.gui.model.ModeloTabelaJogos;
+import br.constapp.genese.gui.panels.PainelResultadoAnalises;
+import br.constapp.genese.gui.panels.PainelResultadoGanhadores;
 import br.constapp.genese.jogo.FabricaDeJogos;
 import br.constapp.genese.jogo.ScannerDeHtm;
 import br.constapp.genese.jogo.modelo.Jogo;
 import br.constapp.genese.path.DefineDiretorio;
-import br.constapp.genese.util.Calc;
 import br.constapp.genese.util.DownloadAndUnzip;
 import br.constapp.genese.util.TestaConexao;
-import javax.swing.JTextArea;
-import javax.swing.JComboBox;
 
 public class Principal extends JFrame {
 
@@ -71,28 +67,16 @@ public class Principal extends JFrame {
 	private static final String OS_NAME = System.getProperty("os.name");
 	private JTabbedPane tabbedPane;
 	private JPanel painelTable;
+	private JPanel painelAnalises;
+	private JPanel painelResultadoAnalises;
 	private JPanel painelGanhadores;
-	private JPanel painelResultado;
-	private JLabel lblGanhadoresSena;
-	private JLabel lblSena;
-	private JLabel lblQuina;
-	private JLabel lblGanhadoresQuina;
-	private JLabel lblRateioSena;
-	private JLabel lblGanhadoresQuadra;
-	private JLabel lblEstimativaPremio;
-	private JLabel lblEstimativa;
-	private JLabel lblRateioQuadra;
-	private JLabel lblRateioQuina;
-	private JLabel lblQuadra;
+	private JPanel painelResultadoGanhadores;
 	private JTable tabelaJogos;
 	private ModeloTabelaJogos modeloTabelaJogos;
+	private ModeloTabelaAnalises modeloTabelaAnalises;
 	private List<Jogo> listaJogos;
+	private List<String> listaAnalises;
 	private URL url;
-	private JLabel lblDataSorteio;
-	private JPanel painelAnalises;
-	private JPanel painelTextArea;
-	private JTextArea textArea;
-	private JComboBox comboBoxAnalises;
 
 	private Principal() {
 		super("GENESE");
@@ -106,10 +90,7 @@ public class Principal extends JFrame {
 		FabricaDeJogos.criaJogo(scan.getListaSorteios());
 		listaJogos = FabricaDeJogos.getListaJogos();
 
-		Jogo jogo = new Jogo();
-		jogo = listaJogos.get(listaJogos.size() - 1);
-
-		montaTela(jogo);
+		montaTela();
 
 	}
 
@@ -149,19 +130,18 @@ public class Principal extends JFrame {
 
 	}
 
-	private void montaTela(Jogo jogo) {
+	private void montaTela() {
 
-		criaJTable();
-		preparaPainelResultado(jogo);
+		preparaPainelResultadoGanhadores();
+		preparaPainelResultadoAnalises();
+		criaJTableJogos();
 		preparaPainelTable();
-		preparaPainelAnalises();
 		preparaTabbedPane();
-
 		criaJanela();
 
 	}
 
-	private void criaJTable() {
+	private void criaJTableJogos() {
 
 		modeloTabelaJogos = new ModeloTabelaJogos(listaJogos);
 		DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
@@ -176,360 +156,113 @@ public class Principal extends JFrame {
 		tabelaJogos.getColumnModel().getColumn(1).setPreferredWidth(110);
 		tabelaJogos.getColumnModel().getColumn(0).setCellRenderer(centralizado);
 		tabelaJogos.getColumnModel().getColumn(1).setCellRenderer(centralizado);
+		tabelaJogos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		tabelaJogos.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {
+		tabelaJogos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
-					JTable target = (JTable) e.getSource();
-					int row = target.getSelectedRow();
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+
+				if (!tabelaJogos.getSelectionModel().isSelectionEmpty() && !e.getValueIsAdjusting()) {
+
+					int linhaSelecionada = tabelaJogos.getSelectedRow() + 1;
+					int linhaAnterior = e.getFirstIndex() + 1;
+
+					if (linhaSelecionada == linhaAnterior) {
+						linhaAnterior = e.getLastIndex() + 1;
+					}
+
+					if (linhaSelecionada == 0) {
+						linhaSelecionada = e.getLastIndex() + 1;
+					}
+
+					System.out.println("Linha selecionada: " + linhaSelecionada);
+					System.out.println("Seleção anterior: " + linhaAnterior);
+					System.out.println("");
+
+					int row = (int) tabelaJogos.getValueAt(tabelaJogos.getSelectedRow(), 0) - 1;
 
 					Jogo jogo = new Jogo();
 					jogo = listaJogos.get(row);
 
-					geraEtiquetas(jogo);
-
+					PainelResultadoGanhadores.geraEtiquetasCubicos(jogo);
 				}
 			}
 		});
 	}
 
 	private void preparaPainelTable() {
+
 		painelTable = new JPanel();
 		painelTable.setBackground(Color.WHITE);
 		JScrollPane barraRolagem = new JScrollPane(tabelaJogos);
 		barraRolagem.setBackground(Color.WHITE);
 		GroupLayout gl_painelTable = new GroupLayout(painelTable);
-		gl_painelTable.setHorizontalGroup(
-			gl_painelTable.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelTable.createSequentialGroup()
-					.addComponent(barraRolagem, GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		gl_painelTable.setVerticalGroup(
-			gl_painelTable.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_painelTable.createSequentialGroup()
-					.addGap(22)
-					.addComponent(barraRolagem, GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE))
-		);
+		gl_painelTable.setHorizontalGroup(gl_painelTable.createParallelGroup(Alignment.TRAILING)
+				.addComponent(barraRolagem, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE));
+		gl_painelTable.setVerticalGroup(gl_painelTable.createParallelGroup(Alignment.LEADING).addComponent(barraRolagem,
+				GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE));
 		painelTable.setLayout(gl_painelTable);
 
 		GuiUtils.scrollToVisible(tabelaJogos, tabelaJogos.getRowCount() - 1);
 
 	}
 
-	private void preparaPainelResultado(Jogo jogo) {
+	private void preparaPainelResultadoGanhadores() {
 
-		painelResultado = new JPanel();
-		painelResultado.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		painelResultado.setBorder(new TitledBorder(null, null, TitledBorder.CENTER, TitledBorder.TOP, null, null));
-		painelResultado.setBackground(Color.WHITE);
-
-		lblGanhadoresSena = new JLabel();
-		lblGanhadoresSena.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGanhadoresSena.setText("1 ganhador");
-		lblGanhadoresSena.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblGanhadoresSena.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblGanhadoresSena.setForeground(new Color(0, 128, 0));
-		lblRateioSena = new JLabel();
-		lblRateioSena.setText("Rateio - R$ 1.000.000,00");
-		lblRateioSena.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblGanhadoresQuina = new JLabel();
-		lblGanhadoresQuina.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGanhadoresQuina.setText("100 ganhadores");
-		lblGanhadoresQuina.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblGanhadoresQuina.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblGanhadoresQuina.setForeground(new Color(51, 51, 204));
-		lblRateioQuina = new JLabel();
-		lblRateioQuina.setText("Rateio - R$ 45.000,00");
-		lblRateioQuina.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblGanhadoresQuadra = new JLabel();
-		lblGanhadoresQuadra.setHorizontalAlignment(SwingConstants.CENTER);
-		lblGanhadoresQuadra.setText("1000 ganhadores");
-		lblGanhadoresQuadra.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblGanhadoresQuadra.setHorizontalTextPosition(SwingConstants.CENTER);
-		lblGanhadoresQuadra.setForeground(new Color(218, 165, 32));
-		lblRateioQuadra = new JLabel();
-		lblRateioQuadra.setText("Rateio - R$ 250,00");
-		lblRateioQuadra.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblEstimativaPremio = new JLabel();
-		lblEstimativaPremio.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEstimativaPremio.setFont(new Font("Arial", Font.PLAIN, 11));
-		lblDataSorteio = new JLabel("Data do sorteio: 11/03/1991");
-		lblDataSorteio.setHorizontalAlignment(SwingConstants.CENTER);
-
-		geraEtiquetas(jogo);
-
-		lblSena = new JLabel("Sena");
-		lblSena.setForeground(new Color(0, 128, 0));
-		lblSena.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblSena.setAlignmentX(0.5f);
-
-		lblQuina = new JLabel("Quina");
-		lblQuina.setPreferredSize(new Dimension(42, 14));
-		lblQuina.setMinimumSize(new Dimension(42, 14));
-		lblQuina.setMaximumSize(new Dimension(42, 14));
-		lblQuina.setForeground(new Color(51, 51, 204));
-		lblQuina.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblQuina.setAlignmentX(0.5f);
-
-		lblQuadra = new JLabel("Quadra");
-		lblQuadra.setForeground(new Color(218, 165, 32));
-		lblQuadra.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblQuadra.setAlignmentX(0.5f);
-
-		GroupLayout gl_painelResultado = new GroupLayout(painelResultado);
-		gl_painelResultado.setHorizontalGroup(
-			gl_painelResultado.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelResultado.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_painelResultado.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_painelResultado.createSequentialGroup()
-							.addComponent(lblQuadra, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-							.addComponent(lblGanhadoresQuadra, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblRateioQuadra, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_painelResultado.createSequentialGroup()
-							.addComponent(lblQuina, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-							.addComponent(lblGanhadoresQuina, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblRateioQuina, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, gl_painelResultado.createSequentialGroup()
-							.addComponent(lblSena)
-							.addPreferredGap(ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-							.addComponent(lblGanhadoresSena, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lblRateioSena, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
-						.addComponent(lblDataSorteio, GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_painelResultado.setVerticalGroup(
-			gl_painelResultado.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_painelResultado.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_painelResultado.createParallelGroup(Alignment.TRAILING)
-						.addComponent(lblSena)
-						.addComponent(lblGanhadoresSena, GroupLayout.PREFERRED_SIZE, 19, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblRateioSena)
-					.addGap(18)
-					.addGroup(gl_painelResultado.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(lblGanhadoresQuina, GroupLayout.PREFERRED_SIZE, 16, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblQuina, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblRateioQuina)
-					.addGap(18)
-					.addGroup(gl_painelResultado.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblGanhadoresQuadra, GroupLayout.PREFERRED_SIZE, 18, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblQuadra))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lblRateioQuadra)
-					.addGap(18)
-					.addComponent(lblDataSorteio)
-					.addContainerGap(36, Short.MAX_VALUE))
-		);
-		painelResultado.setLayout(gl_painelResultado);
+		painelResultadoGanhadores = new PainelResultadoGanhadores();
+		painelResultadoGanhadores = PainelResultadoGanhadores.getPainelResultadoGanhadores();
 
 		preparaPainelGanhadores();
 
 	}
 
 	private void preparaPainelGanhadores() {
+
 		painelGanhadores = new JPanel();
 		painelGanhadores.setBackground(Color.WHITE);
 
-		lblEstimativa = new JLabel("Estimativa para próximo concurso");
-		lblEstimativa.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEstimativa.setFont(new Font("Arial", Font.PLAIN, 11));
-
 		GroupLayout gl_PainelGanhadores = new GroupLayout(painelGanhadores);
-		gl_PainelGanhadores.setHorizontalGroup(
-			gl_PainelGanhadores.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_PainelGanhadores.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_PainelGanhadores.createParallelGroup(Alignment.LEADING)
-						.addComponent(painelResultado, GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
-						.addComponent(lblEstimativaPremio, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
-						.addComponent(lblEstimativa, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_PainelGanhadores.setVerticalGroup(
-			gl_PainelGanhadores.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_PainelGanhadores.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(painelResultado, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblEstimativa)
-					.addGap(5)
-					.addComponent(lblEstimativaPremio)
-					.addContainerGap(35, Short.MAX_VALUE))
-		);
+		gl_PainelGanhadores.setHorizontalGroup(gl_PainelGanhadores.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_PainelGanhadores.createSequentialGroup().addContainerGap()
+						.addComponent(painelResultadoGanhadores, GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+						.addContainerGap()));
+		gl_PainelGanhadores.setVerticalGroup(gl_PainelGanhadores.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_PainelGanhadores.createSequentialGroup().addContainerGap()
+						.addComponent(painelResultadoGanhadores, GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+						.addContainerGap()));
 
 		painelGanhadores.setLayout(gl_PainelGanhadores);
 
 	}
 
-	private void geraEtiquetas(Jogo jogo) {
+	private void preparaPainelResultadoAnalises() {
 
-		if (jogo.getNumGanhadoresSena() != 0) {
-			String s = " ganhadores";
-			if (jogo.getNumGanhadoresSena() == 1) {
-				s = " ganhador";
-			}
-			lblGanhadoresSena.setText(jogo.getNumGanhadoresSena() + s);
-			lblRateioSena.setText("Rateio - R$ " + jogo.getRateioSena());
-		} else {
-			lblGanhadoresSena.setText("Acumulou!");
-			lblRateioSena.setText("Nenhum ganhador");
-		}
+		painelResultadoAnalises = new JPanel();
 
-		if (jogo.getNumGanhadoresQuina() != 0) {
-			String s = " ganhadores";
-			if (jogo.getNumGanhadoresQuina() == 1) {
-				s = " ganhador";
-			}
-			lblGanhadoresQuina.setText(jogo.getNumGanhadoresQuina() + s);
-			lblRateioQuina.setText("Rateio - R$ " + jogo.getRateioQuina());
-		} else {
-			lblGanhadoresQuina.setText("Nenhum ganhador");
-			lblRateioQuina.setText("Nenhum ganhador");
-		}
+		new PainelResultadoAnalises();
 
-		if (jogo.getNumGanhadoresQuadra() != 0) {
-			String s = " ganhadores";
-			if (jogo.getNumGanhadoresQuadra() == 1) {
-				s = " ganhador";
-			}
-			lblGanhadoresQuadra.setText(jogo.getNumGanhadoresQuadra() + s);
-			lblRateioQuadra.setText("Rateio - R$ " + jogo.getRateioQuadra());
-		} else {
-			lblGanhadoresQuadra.setText("Nenhum ganhador");
-			lblRateioQuadra.setText("Nenhum ganhador");
-		}
+		painelResultadoAnalises = PainelResultadoAnalises.getPainelResultadoAnalises();
 
-		lblEstimativaPremio.setText("R$ " + jogo.getEstimativaPremio());
-		lblDataSorteio.setText("Data do sorteio: " + jogo.getDataSorteio());
-		painelResultado.setBorder(new TitledBorder(null, "Concurso " + jogo.getConcurso(), TitledBorder.CENTER,
-				TitledBorder.TOP, null, null));
+		preparaPainelAnalises();
 
-	}
-	
-	private void criaTextArea() {
-		textArea = new JTextArea();
-		textArea.setLineWrap(true);
-		textArea.setEditable(false);
-	}
-
-	private void preparaPainelTextArea() {
-		
-		painelTextArea = new JPanel();
-		painelTextArea.setBackground(Color.WHITE);
-		painelTextArea.setBorder(null);
-		
-		criaTextArea();
-		
-		GroupLayout gl_painelTextArea = new GroupLayout(painelTextArea);
-		gl_painelTextArea.setHorizontalGroup(
-			gl_painelTextArea.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelTextArea.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		gl_painelTextArea.setVerticalGroup(
-			gl_painelTextArea.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelTextArea.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-					.addContainerGap())
-		);
-		painelTextArea.setLayout(gl_painelTextArea);
-	}
-	
-	private void criaComboBoxAnalises() {
-		
-		String[] classesAnalise = new String[]{"Cubicos", "Faixa de números"};
-		
-		comboBoxAnalises = new JComboBox(classesAnalise);
-		
-		comboBoxAnalises.addActionListener(new ActionListener() {
-    		
-    		@Override
-    		public void actionPerformed(ActionEvent e) {	
-    			System.out.println(comboBoxAnalises.getSelectedIndex());
-    			
-    			if (comboBoxAnalises.getSelectedIndex() == 0) {
-    		        ScannerDeHtm scan = new ScannerDeHtm();
-    		        FabricaDeJogos.criaJogo(scan.getListaSorteios());
-    		        List<Jogo> listaJogos = FabricaDeJogos.getListaJogos();
-
-    		        int numCombinacoes = 0;
-    		        int size0Cubo = 0;
-    		        int size1Cubo = 0;
-    		        int size2Cubos = 0;
-    		        int size3Cubos = 0;
-
-    		        Cubicos c = new Cubicos(listaJogos);
-
-    		        numCombinacoes += listaJogos.size();
-    		        size0Cubo += c.getLista0Cubico().size();
-    		        size1Cubo += c.getLista1Cubico().size();
-    		        size2Cubos += c.getLista2Cubicos().size();
-    		        size3Cubos += c.getLista3Cubicos().size();
-    		        
-    		        String text = "Jogos com 0 número cubico: " + Calc.porcentagem(size0Cubo, numCombinacoes) + 
-    		        		"\nJogos com 1 número cubico: " + Calc.porcentagem(size1Cubo, numCombinacoes) + 
-    		        		"\nJogos com 2 números cubicos: " + Calc.porcentagem(size2Cubos, numCombinacoes) + 
-    		        		"\nJogos com 3 números cubicos: " + Calc.porcentagem(size3Cubos, numCombinacoes);
-    		        textArea.setText(text);
-
-    		        System.out.println(numCombinacoes);
-
-    		        System.out.println("Jogos com 0 número cubico: " + Calc.porcentagem(size0Cubo, numCombinacoes));
-
-    		        System.out.println("Jogos com 1 número cubico: " + Calc.porcentagem(size1Cubo, numCombinacoes));
-
-    		        System.out.println("Jogos com 2 números cubicos: " + Calc.porcentagem(size2Cubos, numCombinacoes));
-
-    		        System.out.println("Jogos com 3 números cubicos: " + Calc.porcentagem(size3Cubos, numCombinacoes));
-    			}
-    			
-    			if (comboBoxAnalises.getSelectedIndex() == 1) {
-    				textArea.setText("");
-    			}
-    			
-    		}
-});
-		
 	}
 
 	private void preparaPainelAnalises() {
 
 		painelAnalises = new JPanel();
+		painelAnalises.setBorder(new EmptyBorder(1, 10, 30, 10));
 		painelAnalises.setBackground(Color.WHITE);
 
-		preparaPainelTextArea();		
-		criaComboBoxAnalises();
-
 		GroupLayout gl_painelAnalises = new GroupLayout(painelAnalises);
-		gl_painelAnalises.setHorizontalGroup(
-			gl_painelAnalises.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelAnalises.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_painelAnalises.createParallelGroup(Alignment.LEADING)
-						.addComponent(painelTextArea, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 304, Short.MAX_VALUE)
-						.addComponent(comboBoxAnalises, Alignment.TRAILING, 0, 304, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		gl_painelAnalises.setVerticalGroup(
-			gl_painelAnalises.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelAnalises.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(comboBoxAnalises, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(painelTextArea, GroupLayout.PREFERRED_SIZE, 231, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(12, Short.MAX_VALUE))
+		gl_painelAnalises.setHorizontalGroup(gl_painelAnalises.createParallelGroup(Alignment.CENTER)
+				.addComponent(painelResultadoAnalises).addGap(0, 324, Short.MAX_VALUE));
+		gl_painelAnalises.setVerticalGroup(gl_painelAnalises.createParallelGroup(Alignment.CENTER)
+				.addComponent(painelResultadoAnalises).addGap(0, 292, Short.MAX_VALUE)
+
 		);
 		painelAnalises.setLayout(gl_painelAnalises);
+
 	}
 
 	private void preparaTabbedPane() {
@@ -539,14 +272,14 @@ public class Principal extends JFrame {
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
-		tabbedPane.addTab("Análises", null, painelAnalises, "Números da sorte");
+		tabbedPane.addTab("Análises", imagemTituloTab, painelAnalises, "Números da sorte");
 		tabbedPane.addTab("Ganhadores", imagemTituloTab, painelGanhadores, "Resultados");
 
 	}
 
 	private void criaJanela() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setSize(550, 360);
+		setSize(595, 395);
 		Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((tela.width - this.getSize().width) / 2, (tela.height - this.getSize().height) / 2);
 		setVisible(true);
@@ -556,22 +289,18 @@ public class Principal extends JFrame {
 		cPane.add(painelTable);
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(painelTable, GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(painelTable, GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
-						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE))
-					.addContainerGap())
-		);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(painelTable, GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE).addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(painelTable,
+								GroupLayout.PREFERRED_SIZE, 334, GroupLayout.PREFERRED_SIZE))
+						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE))
+				.addContainerGap()));
 		cPane.setLayout(groupLayout);
 
 	}

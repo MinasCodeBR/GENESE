@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Criado por rafael
+ * Criado por Rafael Teixeira
  * em 25/09/16.
  */
 public class CombinacoesTest {
 
-    static Integer[] numeros;
+    private static Integer[] numeros;
     private static List<Jogo> combinacoes;
 
     @SuppressWarnings("unchecked")

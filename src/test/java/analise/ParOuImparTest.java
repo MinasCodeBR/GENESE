@@ -66,9 +66,9 @@ public class ParOuImparTest {
 
         System.out.println();
 
-        System.out.println("Jogos com 0 número par: " + Calc.porcentagem(size0Par, numCombinacoes));
+        System.out.println("Jogos com 0 número  par:   " + Calc.porcentagem(size0Par, numCombinacoes));
 
-        System.out.println("Jogos com 1 número par: " + Calc.porcentagem(size1Par, numCombinacoes));
+        System.out.println("Jogos com 1 número  par:   " + Calc.porcentagem(size1Par, numCombinacoes));
 
         System.out.println("Jogos com 2 números pares: " + Calc.porcentagem(size2Pares, numCombinacoes));
 
@@ -82,9 +82,9 @@ public class ParOuImparTest {
 
         System.out.println();
 
-        System.out.println("Jogos com 0 número impar: " + Calc.porcentagem(size0Impar, numCombinacoes));
+        System.out.println("Jogos com 0 número  impar:   " + Calc.porcentagem(size0Impar, numCombinacoes));
 
-        System.out.println("Jogos com 1 número impar: " + Calc.porcentagem(size1Impar, numCombinacoes));
+        System.out.println("Jogos com 1 número  impar:   " + Calc.porcentagem(size1Impar, numCombinacoes));
 
         System.out.println("Jogos com 2 números impares: " + Calc.porcentagem(size2Impares, numCombinacoes));
 
