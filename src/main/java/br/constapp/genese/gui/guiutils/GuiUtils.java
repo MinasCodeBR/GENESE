@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2016  Rafael Teixeira
+ *     Copyright (C)  2017  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -19,16 +19,8 @@
 
 package br.constapp.genese.gui.guiutils;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dialog;
-import java.awt.Frame;
-import java.awt.Point;
-import java.awt.Rectangle;
-
-import javax.swing.JTable;
-import javax.swing.JTree;
-import javax.swing.JViewport;
+import javax.swing.*;
+import java.awt.*;
 
 public class GuiUtils {
 	public static void scrollToVisible(JTable table, int rowIndex) {

@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2016  Rafael Teixeira
+ *     Copyright (C)  2017  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -19,23 +19,16 @@
 
 package br.constapp.genese.gui.panels;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.util.List;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
-import javax.swing.border.TitledBorder;
-
 import br.constapp.genese.jogo.FabricaDeJogos;
 import br.constapp.genese.jogo.ScannerDeHtm;
 import br.constapp.genese.jogo.modelo.Jogo;
+
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.TitledBorder;
+import java.awt.*;
+import java.util.List;
 
 public class PainelResultadoGanhadores extends JPanel {
 

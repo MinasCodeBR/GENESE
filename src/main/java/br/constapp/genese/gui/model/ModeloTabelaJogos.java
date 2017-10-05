@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2016  Rafael Teixeira
+ *     Copyright (C)  2017  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -19,10 +19,10 @@
 
 package br.constapp.genese.gui.model;
 
-import java.util.List;
-import javax.swing.table.AbstractTableModel;
-
 import br.constapp.genese.jogo.modelo.Jogo;
+
+import javax.swing.table.AbstractTableModel;
+import java.util.List;
 
 public class ModeloTabelaJogos extends AbstractTableModel {
 

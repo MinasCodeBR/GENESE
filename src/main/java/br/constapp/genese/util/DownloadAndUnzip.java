@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2016  Rafael Teixeira
+ *     Copyright (C)  2017  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -84,8 +84,9 @@ public final class DownloadAndUnzip {
         if (!buildDirectory(targetDir)) {
             throw new IOException("Não foi possível criar o diretório: " + targetDir);
         }
-        
-		ZipFile zipFile = new ZipFile(theFile);
+
+        @SuppressWarnings("resource")
+        ZipFile zipFile = new ZipFile(theFile);
         for (Enumeration<? extends ZipEntry> entries = zipFile.entries(); entries.hasMoreElements(); ) {
             ZipEntry entry = entries.nextElement();
             File file = new File(targetDir, File.separator + entry.getName());

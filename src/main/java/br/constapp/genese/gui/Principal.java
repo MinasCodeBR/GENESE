@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2016  Rafael Teixeira
+ *     Copyright (C)  2017  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -19,38 +19,7 @@
 
 package br.constapp.genese.gui;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
-
 import br.constapp.genese.gui.guiutils.GuiUtils;
-import br.constapp.genese.gui.model.ModeloTabelaAnalises;
 import br.constapp.genese.gui.model.ModeloTabelaJogos;
 import br.constapp.genese.gui.panels.PainelResultadoAnalises;
 import br.constapp.genese.gui.panels.PainelResultadoGanhadores;
@@ -60,6 +29,20 @@ import br.constapp.genese.jogo.modelo.Jogo;
 import br.constapp.genese.path.DefineDiretorio;
 import br.constapp.genese.util.DownloadAndUnzip;
 import br.constapp.genese.util.TestaConexao;
+
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 
 public class Principal extends JFrame {
 
@@ -73,9 +56,7 @@ public class Principal extends JFrame {
 	private JPanel painelResultadoGanhadores;
 	private JTable tabelaJogos;
 	private ModeloTabelaJogos modeloTabelaJogos;
-	private ModeloTabelaAnalises modeloTabelaAnalises;
 	private List<Jogo> listaJogos;
-	private List<String> listaAnalises;
 	private URL url;
 
 	private Principal() {
@@ -305,7 +286,7 @@ public class Principal extends JFrame {
 
 	}
 
-	private void atualizaTabelaJogos() {
+/*	private void atualizaTabelaJogos() {
 
 		baixaJogos();
 
@@ -334,7 +315,7 @@ public class Principal extends JFrame {
 						"Atualizar Jogos", JOptionPane.INFORMATION_MESSAGE);
 			}
 		}
-	}
+	}*/
 
 	private void baixaJogos() {
 		File targetDir = new File(DefineDiretorio.getDiretorioCEF());

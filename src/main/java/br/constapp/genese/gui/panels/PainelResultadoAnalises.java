@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2016  Rafael Teixeira
+ *     Copyright (C)  2017  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -19,26 +19,13 @@
 
 package br.constapp.genese.gui.panels;
 
-import java.awt.Color;
-import java.awt.Font;
+import br.constapp.genese.processamento.*;
+
+import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-
-import br.constapp.genese.analise.Cubicos;
-import br.constapp.genese.jogo.FabricaDeJogos;
-import br.constapp.genese.jogo.ScannerDeHtm;
-import br.constapp.genese.jogo.modelo.Jogo;
-import br.constapp.genese.util.Calc;
-
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 public class PainelResultadoAnalises extends JPanel {
 
@@ -56,66 +43,9 @@ public class PainelResultadoAnalises extends JPanel {
 
 	}
 
-	private void preparaComboBox() {
+	public static void setTextArea(String text) {
 
-		String[] classesAnalise = new String[] { "Cúbicos", "Faixa de números", "Fibonacci", "Multiplicidade",
-				"Par ou Ímpar", "Primalidade", "Quadráticos" };
-
-		DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<String>(classesAnalise);
-
-		comboBox = new JComboBox<String>(comboModel);
-		comboBox.setRequestFocusEnabled(false);
-
-		comboBox.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				System.out.println(comboBox.getSelectedIndex());
-
-				if (comboBox.getSelectedItem() == "Cúbicos") {
-
-			        ScannerDeHtm scan = new ScannerDeHtm();
-			        FabricaDeJogos.criaJogo(scan.getListaSorteios());
-			        List<Jogo> listaJogos = FabricaDeJogos.getListaJogos();
-
-			        int numCombinacoes = 0;
-			        int size0Cubo = 0;
-			        int size1Cubo = 0;
-			        int size2Cubos = 0;
-			        int size3Cubos = 0;
-
-			        Cubicos c = new Cubicos(listaJogos);
-
-			        numCombinacoes += listaJogos.size();
-			        size0Cubo += c.getLista0Cubico().size();
-			        size1Cubo += c.getLista1Cubico().size();
-			        size2Cubos += c.getLista2Cubicos().size();
-			        size3Cubos += c.getLista3Cubicos().size();
-			        
-			        textArea.setText("");
-
-			        setTextArea("Análise dos cúbicos:\n\n");
-
-			        setTextArea("nenhum número cúbico: " + Calc.porcentagem(size0Cubo, numCombinacoes) + "\n");
-
-			        setTextArea("1 número cúbico: " + Calc.porcentagem(size1Cubo, numCombinacoes) + "\n");
-
-			        setTextArea("2 números cúbicos: " + Calc.porcentagem(size2Cubos, numCombinacoes) + "\n");
-
-			        setTextArea("3 números cúbicos: " + Calc.porcentagem(size3Cubos, numCombinacoes) + "\n\n");			        
-			      
-
-				}
-
-				if (comboBox.getSelectedItem() == "Faixa de números") {
-
-					textArea.setText("");
-				}
-
-			}
-		});
-
+		textArea.append(text);
 	}
 
 	private void preparaPainelTextArea() {
@@ -171,8 +101,82 @@ public class PainelResultadoAnalises extends JPanel {
 		return painelResultadoAnalises;
 	}
 
-	public static void setTextArea(String text) {
-		
-		textArea.append(text);
+	private void preparaComboBox() {
+
+		String[] classesAnalise = new String[]{"Cúbicos", "Faixa de números", "Fibonacci", "Multiplicidade",
+				"Par ou Ímpar", "Primalidade", "Quadráticos"};
+
+		DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<String>(classesAnalise);
+
+		comboBox = new JComboBox<String>(comboModel);
+		comboBox.setRequestFocusEnabled(false);
+
+		comboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				System.out.println(comboBox.getSelectedIndex());
+
+				if (comboBox.getSelectedItem() == "Cúbicos") {
+
+					textArea.setText("");
+					textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
+					CubicosPro.processaCubicos();
+
+				}
+
+				if (comboBox.getSelectedItem() == "Faixa de números") {
+
+					textArea.setText("");
+					textArea.setFont(new Font("Tahoma", Font.PLAIN, 10));
+					FaixaDeNumerosPro.processaFaixaDeNumeros();
+
+				}
+
+				if (comboBox.getSelectedItem() == "Fibonacci") {
+
+					textArea.setText("");
+					textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
+					FibonacciPro.processaFibonacci();
+
+				}
+
+				if (comboBox.getSelectedItem() == "Multiplicidade") {
+
+					textArea.setText("");
+					textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
+					MultiplicidadePro.processaMultiplicidade();
+
+				}
+
+				if (comboBox.getSelectedItem() == "Par ou Ímpar") {
+
+					textArea.setText("");
+					textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
+					ParOuImparPro.processaParOuImpar();
+
+				}
+
+				if (comboBox.getSelectedItem() == "Primalidade") {
+
+					textArea.setText("");
+					textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
+					PrimalidadePro.processaPrimalidade();
+
+				}
+
+				if (comboBox.getSelectedItem() == "Quadráticos") {
+
+					textArea.setText("");
+					textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
+					QuadraticosPro.processaQuadráticos();
+
+				}
+
+			}
+
+		});
+
 	}
 }
