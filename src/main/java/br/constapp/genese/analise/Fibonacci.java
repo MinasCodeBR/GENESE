@@ -30,6 +30,7 @@ public class Fibonacci {
     private static int k;
     private List<Jogo> lista0Fibonacci, lista1Fibonacci, lista2Fibonacci, lista3Fibonacci, lista4Fibonacci, lista5Fibonacci,
             lista6Fibonacci;
+    private Integer[] vetFibonacci;
 
     public Fibonacci(List<Jogo> listaJogos) {
         executaFibonacci(listaJogos);
@@ -57,7 +58,7 @@ public class Fibonacci {
 
     private void executaFibonacci(List<Jogo> listaJogos) {
 
-        Integer[] vetFibonacci = new Integer[9];
+        vetFibonacci = new Integer[9];
         int index = 0;
         for (int i = 2; i <= 10; i++) {
             vetFibonacci[index] = fibo(i);
@@ -102,4 +103,8 @@ public class Fibonacci {
     public List<Jogo> getLista6Fibonacci() {
         return lista6Fibonacci;
     }
+
+	public Integer[] getVetFibonacci() {
+		return vetFibonacci;
+	}
 }

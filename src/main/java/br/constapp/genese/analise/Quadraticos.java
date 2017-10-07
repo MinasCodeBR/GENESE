@@ -33,7 +33,7 @@ public class Quadraticos {
         executaQuadraticos(listaJogos);
     }
 
-    private Integer[] defineNumerosQuadrados() {
+    public Integer[] defineNumerosQuadrados() {
         Integer[] numerosQuadrados = new Integer[7];
         for (int n = 1; n <= 7; n++) {
             numerosQuadrados[n - 1] = (int) Math.pow(n, 2);

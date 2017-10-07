@@ -55,20 +55,27 @@ public class PainelResultadoAnalises extends JPanel {
 		painelTextArea.setBorder(null);
 
 		textArea = new JTextArea();
+		textArea.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textArea.setEditable(false);
 		textArea.setLineWrap(true);
 
 		JScrollPane barraRolagemTxtArea = new JScrollPane();
 		barraRolagemTxtArea.setViewportView(textArea);
 		GroupLayout gl_painelTextArea = new GroupLayout(painelTextArea);
-		gl_painelTextArea.setHorizontalGroup(gl_painelTextArea.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelTextArea.createSequentialGroup().addContainerGap()
-						.addComponent(barraRolagemTxtArea, GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-						.addContainerGap()));
-		gl_painelTextArea.setVerticalGroup(gl_painelTextArea.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelTextArea.createSequentialGroup().addGap(15)
-						.addComponent(barraRolagemTxtArea, GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-						.addContainerGap()));
+		gl_painelTextArea.setHorizontalGroup(
+			gl_painelTextArea.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_painelTextArea.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(barraRolagemTxtArea, GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_painelTextArea.setVerticalGroup(
+			gl_painelTextArea.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_painelTextArea.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(barraRolagemTxtArea, GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+					.addContainerGap())
+		);
 		painelTextArea.setLayout(gl_painelTextArea);
 	}
 
@@ -80,18 +87,22 @@ public class PainelResultadoAnalises extends JPanel {
 		painelResultadoAnalises.setBackground(Color.WHITE);
 
 		GroupLayout gl_painelResultadoAnalises = new GroupLayout(painelResultadoAnalises);
-		gl_painelResultadoAnalises.setHorizontalGroup(gl_painelResultadoAnalises.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_painelResultadoAnalises.createSequentialGroup().addContainerGap()
-						.addGroup(gl_painelResultadoAnalises.createParallelGroup(Alignment.TRAILING)
-								.addComponent(painelTextArea, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 340,
-										Short.MAX_VALUE)
-								.addComponent(comboBox, Alignment.LEADING, 0, 340, Short.MAX_VALUE))
-						.addContainerGap()));
-		gl_painelResultadoAnalises.setVerticalGroup(gl_painelResultadoAnalises.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelResultadoAnalises.createSequentialGroup().addGap(25)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE).addGap(18)
-						.addComponent(painelTextArea, GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-						.addContainerGap()));
+		gl_painelResultadoAnalises.setHorizontalGroup(
+			gl_painelResultadoAnalises.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_painelResultadoAnalises.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(comboBox, 0, 511, Short.MAX_VALUE)
+					.addContainerGap())
+				.addComponent(painelTextArea, GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+		);
+		gl_painelResultadoAnalises.setVerticalGroup(
+			gl_painelResultadoAnalises.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_painelResultadoAnalises.createSequentialGroup()
+					.addGap(25)
+					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(painelTextArea, GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+		);
 
 		painelResultadoAnalises.setLayout(gl_painelResultadoAnalises);
 
@@ -129,7 +140,7 @@ public class PainelResultadoAnalises extends JPanel {
 				if (comboBox.getSelectedItem() == "Faixa de números") {
 
 					textArea.setText("");
-					textArea.setFont(new Font("Tahoma", Font.PLAIN, 10));
+					textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
 					FaixaDeNumerosPro.processaFaixaDeNumeros();
 
 				}

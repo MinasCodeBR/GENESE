@@ -33,7 +33,7 @@ public class Primalidade {
         executaPrimalidade(listaJogos);
     }
 
-    private Integer[] defineNumerosPrimos() {
+    public Integer[] defineNumerosPrimos() {
 
         List<Integer> dezenas = new ArrayList<>();
         Integer[] primos = new Integer[17];

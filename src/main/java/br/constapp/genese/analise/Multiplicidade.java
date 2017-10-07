@@ -34,7 +34,7 @@ public class Multiplicidade {
         executaMultiplicidade(listaJogos, multiplosDe);
     }
 
-    private Integer[] defineMultiplosDe(int multiplosDe) {
+    public Integer[] defineMultiplosDe(int multiplosDe) {
 
         int elementos = (60 / multiplosDe);
         Integer[] multiplos = new Integer[elementos];

@@ -32,7 +32,7 @@ public class Cubicos {
         executaCubicos(listaJogos);
     }
 
-    private Integer[] defineNumerosCubicos() {
+    public Integer[] defineNumerosCubicos() {
         Integer[] numerosCubicos = new Integer[3];
         for (int n = 1; n <= 3; n++) {
             numerosCubicos[n - 1] = (int) Math.pow(n, 3);

@@ -129,6 +129,7 @@ public class Principal extends JFrame {
 		centralizado.setHorizontalAlignment(SwingConstants.CENTER);
 
 		tabelaJogos = new JTable(modeloTabelaJogos);
+		tabelaJogos.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		tabelaJogos.setBackground(Color.WHITE);
 		tabelaJogos.getTableHeader().setReorderingAllowed(false);
 		tabelaJogos.getTableHeader().setResizingAllowed(false);
@@ -177,6 +178,7 @@ public class Principal extends JFrame {
 		painelTable = new JPanel();
 		painelTable.setBackground(Color.WHITE);
 		JScrollPane barraRolagem = new JScrollPane(tabelaJogos);
+		barraRolagem.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		barraRolagem.setBackground(Color.WHITE);
 		GroupLayout gl_painelTable = new GroupLayout(painelTable);
 		gl_painelTable.setHorizontalGroup(gl_painelTable.createParallelGroup(Alignment.TRAILING)
