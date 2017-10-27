@@ -19,30 +19,47 @@
 
 package br.constapp.genese.gui;
 
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
+
 import br.constapp.genese.gui.guiutils.GuiUtils;
 import br.constapp.genese.gui.model.ModeloTabelaJogos;
 import br.constapp.genese.gui.panels.PainelResultadoAnalises;
 import br.constapp.genese.gui.panels.PainelResultadoGanhadores;
+import br.constapp.genese.gui.panels.PainelResultadoPalpites;
 import br.constapp.genese.jogo.FabricaDeJogos;
 import br.constapp.genese.jogo.ScannerDeHtm;
 import br.constapp.genese.jogo.modelo.Jogo;
 import br.constapp.genese.path.DefineDiretorio;
 import br.constapp.genese.util.DownloadAndUnzip;
 import br.constapp.genese.util.TestaConexao;
-
-import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
 
 public class Principal extends JFrame {
 
@@ -54,12 +71,16 @@ public class Principal extends JFrame {
 	private JPanel painelResultadoAnalises;
 	private JPanel painelGanhadores;
 	private JPanel painelResultadoGanhadores;
+	private JPanel painelPalpites;
+	private JPanel painelResultadoPalpites;
 	private JTable tabelaJogos;
 	private ModeloTabelaJogos modeloTabelaJogos;
 	private List<Jogo> listaJogos;
 	private URL url;
+	private JScrollPane barraRolagem;
 
 	private Principal() {
+
 		super("GENESE");
 		setBackground(Color.WHITE);
 		getContentPane().setBackground(Color.WHITE);
@@ -72,7 +93,6 @@ public class Principal extends JFrame {
 		listaJogos = FabricaDeJogos.getListaJogos();
 
 		montaTela();
-
 	}
 
 	public static void main(String[] args) {
@@ -115,6 +135,7 @@ public class Principal extends JFrame {
 
 		preparaPainelResultadoGanhadores();
 		preparaPainelResultadoAnalises();
+		preparaPainelResultadoPalpites();
 		criaJTableJogos();
 		preparaPainelTable();
 		preparaTabbedPane();
@@ -168,7 +189,11 @@ public class Principal extends JFrame {
 					jogo = listaJogos.get(row);
 
 					PainelResultadoGanhadores.geraEtiquetasCubicos(jogo);
-				}
+					
+					if (tabbedPane.getSelectedIndex() != 2) {
+						tabbedPane.setSelectedIndex(2);
+					}					
+				}				
 			}
 		});
 	}
@@ -177,18 +202,43 @@ public class Principal extends JFrame {
 
 		painelTable = new JPanel();
 		painelTable.setBackground(Color.WHITE);
-		JScrollPane barraRolagem = new JScrollPane(tabelaJogos);
+		barraRolagem = new JScrollPane(tabelaJogos);
 		barraRolagem.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		barraRolagem.setBackground(Color.WHITE);
 		GroupLayout gl_painelTable = new GroupLayout(painelTable);
-		gl_painelTable.setHorizontalGroup(gl_painelTable.createParallelGroup(Alignment.TRAILING)
-				.addComponent(barraRolagem, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE));
-		gl_painelTable.setVerticalGroup(gl_painelTable.createParallelGroup(Alignment.LEADING).addComponent(barraRolagem,
-				GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE));
+		gl_painelTable
+				.setHorizontalGroup(gl_painelTable.createParallelGroup(Alignment.TRAILING).addGroup(Alignment.LEADING,
+						gl_painelTable.createSequentialGroup()
+								.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(barraRolagem,
+										GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)));
+		gl_painelTable.setVerticalGroup(gl_painelTable.createParallelGroup(Alignment.TRAILING)
+				.addComponent(barraRolagem, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE));
 		painelTable.setLayout(gl_painelTable);
 
 		GuiUtils.scrollToVisible(tabelaJogos, tabelaJogos.getRowCount() - 1);
 
+	}
+
+	private void preparaPainelResultadoPalpites() {
+
+		painelResultadoPalpites = new PainelResultadoPalpites();
+		painelResultadoPalpites = PainelResultadoPalpites.getPainelResuldatoPalpites();
+
+		preparaPainelPalpites();
+	}
+
+	private void preparaPainelPalpites() {
+
+		painelPalpites = new JPanel();
+		painelPalpites.setBackground(Color.WHITE);
+
+		GroupLayout gl_PainelPalpites = new GroupLayout(painelPalpites);
+		gl_PainelPalpites.setHorizontalGroup(
+				gl_PainelPalpites.createParallelGroup(Alignment.LEADING).addGap(0, 470, Short.MAX_VALUE));
+		gl_PainelPalpites.setVerticalGroup(
+				gl_PainelPalpites.createParallelGroup(Alignment.LEADING).addGap(0, 327, Short.MAX_VALUE));
+
+		painelPalpites.setLayout(gl_PainelPalpites);
 	}
 
 	private void preparaPainelResultadoGanhadores() {
@@ -255,14 +305,15 @@ public class Principal extends JFrame {
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 11));
 
-		tabbedPane.addTab("Análises", imagemTituloTab, painelAnalises, "Números da sorte");
+		tabbedPane.addTab("Análises", imagemTituloTab, painelAnalises, "Probabilidades");
+		tabbedPane.addTab("Gerador de Palpites", imagemTituloTab, painelPalpites, "Números da sorte");
 		tabbedPane.addTab("Ganhadores", imagemTituloTab, painelGanhadores, "Resultados");
 
 	}
 
 	private void criaJanela() {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setSize(595, 395);
+		setSize(700, 395);
 		Dimension tela = Toolkit.getDefaultToolkit().getScreenSize();
 		setLocation((tela.width - this.getSize().width) / 2, (tela.height - this.getSize().height) / 2);
 		setVisible(true);
@@ -272,52 +323,48 @@ public class Principal extends JFrame {
 		cPane.add(painelTable);
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(painelTable, GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE).addContainerGap()));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
-				.createSequentialGroup()
-				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(painelTable,
-								GroupLayout.PREFERRED_SIZE, 334, GroupLayout.PREFERRED_SIZE))
-						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE))
-				.addContainerGap()));
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING,
+				groupLayout.createSequentialGroup().addContainerGap()
+						.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(painelTable,
+								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+								.addGroup(groupLayout.createSequentialGroup().addGap(21).addComponent(painelTable,
+										GroupLayout.PREFERRED_SIZE, 334, GroupLayout.PREFERRED_SIZE)))
+						.addContainerGap()));
 		cPane.setLayout(groupLayout);
-
 	}
 
-/*	private void atualizaTabelaJogos() {
-
-		baixaJogos();
-
-		int sizeAntes = listaJogos.size();
-
-		ScannerDeHtm scan = new ScannerDeHtm();
-		FabricaDeJogos.criaJogo(scan.getListaSorteios());
-		listaJogos = FabricaDeJogos.getListaJogos();
-
-		modeloTabelaJogos.limpar();
-		modeloTabelaJogos.addListaJogos(listaJogos);
-
-		int sizeDepois = listaJogos.size();
-
-		String diferencaListas = String.valueOf(sizeDepois - sizeAntes);
-
-		if (sizeAntes == sizeDepois) {
-			JOptionPane.showMessageDialog(null, "Concurso nº " + listaJogos.size() + " é o último resultado disponível",
-					"Atualizar Jogos", JOptionPane.INFORMATION_MESSAGE);
-		} else {
-			if (sizeDepois - sizeAntes == 1) {
-				JOptionPane.showMessageDialog(null, "Foi adicionado " + diferencaListas + " jogo à lista",
-						"Atualizar Jogos", JOptionPane.INFORMATION_MESSAGE);
-			} else {
-				JOptionPane.showMessageDialog(null, "Foram adicionados " + diferencaListas + " jogos à lista",
-						"Atualizar Jogos", JOptionPane.INFORMATION_MESSAGE);
-			}
-		}
-	}*/
+	/*
+	 * private void atualizaTabelaJogos() {
+	 * 
+	 * baixaJogos();
+	 * 
+	 * int sizeAntes = listaJogos.size();
+	 * 
+	 * ScannerDeHtm scan = new ScannerDeHtm();
+	 * FabricaDeJogos.criaJogo(scan.getListaSorteios()); listaJogos =
+	 * FabricaDeJogos.getListaJogos();
+	 * 
+	 * modeloTabelaJogos.limpar(); modeloTabelaJogos.addListaJogos(listaJogos);
+	 * 
+	 * int sizeDepois = listaJogos.size();
+	 * 
+	 * String diferencaListas = String.valueOf(sizeDepois - sizeAntes);
+	 * 
+	 * if (sizeAntes == sizeDepois) { JOptionPane.showMessageDialog(null,
+	 * "Concurso nº " + listaJogos.size() + " é o último resultado disponível",
+	 * "Atualizar Jogos", JOptionPane.INFORMATION_MESSAGE); } else { if (sizeDepois
+	 * - sizeAntes == 1) { JOptionPane.showMessageDialog(null, "Foi adicionado " +
+	 * diferencaListas + " jogo à lista", "Atualizar Jogos",
+	 * JOptionPane.INFORMATION_MESSAGE); } else {
+	 * JOptionPane.showMessageDialog(null, "Foram adicionados " + diferencaListas +
+	 * " jogos à lista", "Atualizar Jogos", JOptionPane.INFORMATION_MESSAGE); } } }
+	 */
 
 	private void baixaJogos() {
 		File targetDir = new File(DefineDiretorio.getDiretorioCEF());

@@ -89,7 +89,7 @@ public class FabricaDeJogos {
                 case 14:
                     jogo.setRateioQuadra((listaSorteios.get(u)));
                     break;
-                case 15:
+                case 16:
                     jogo.setEstimativaPremio((listaSorteios.get(u)));
                     break;
             }

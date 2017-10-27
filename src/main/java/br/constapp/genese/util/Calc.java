@@ -27,12 +27,12 @@ public class Calc {
 
     private Calc() {}
 
-    public static String porcentagem(int qtdElementos, int totalElementos) {
+    public static Double porcentagem(int qtdElementos, int totalElementos) {
         Double porcentagem = Double.valueOf(qtdElementos * 100d) / Double.valueOf(totalElementos);
 
         BigDecimal bd = new BigDecimal(porcentagem).setScale(2, RoundingMode.HALF_EVEN);
 
-        return bd.doubleValue() + "%";
+        return bd.doubleValue();
 
     }
 
@@ -43,4 +43,13 @@ public class Calc {
         }
         return n;
     }
+    
+	public static String zeroToLeft(int dezena) {
+		if (dezena <= 9) {
+			String dezenaConvertida = String.format("%02d", dezena);
+			return dezenaConvertida;
+		}
+		String dezenaMantida = String.valueOf(dezena);
+		return dezenaMantida;
+	}
 }

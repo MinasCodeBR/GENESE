@@ -49,8 +49,9 @@ public class FabricaDeCombinacoes {
 
         List<Jogo> listaCombinacoes = new ArrayList<>();
 
-        long elementos = 0;
+        int elementos = 0;
         int numArquivo = 1;
+        int index = 1;
 
         String arquivoSer = File.separator + nomeArquivo + "1";
 
@@ -87,6 +88,15 @@ public class FabricaDeCombinacoes {
                 }
                 i++;
             }
+            
+            jogo.setConcurso(index);
+            
+            if (index < 1000000) {
+            	index++;
+            } else {
+            	index = 1;
+            }
+            
             listaCombinacoes.add(jogo);
             elementos++;
             qtdCombinacoes--;

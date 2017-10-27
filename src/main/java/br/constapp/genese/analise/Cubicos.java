@@ -1,5 +1,5 @@
 /*
- *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
+  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
  *     Copyright (C)  2017  Rafael Teixeira
  *     rafaelfst@live.com
  *
@@ -48,6 +48,8 @@ public class Cubicos {
         lista1Cubico = contador.getLista1Incidencia();
         lista2Cubicos = contador.getLista2Incidencias();
         lista3Cubicos = contador.getLista3Incidencias();
+        
+        
 
     }
 

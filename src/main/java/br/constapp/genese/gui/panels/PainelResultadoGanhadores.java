@@ -43,9 +43,7 @@ public class PainelResultadoGanhadores extends JPanel {
 	private static JLabel lblDataSorteio;
 
 	public PainelResultadoGanhadores() {
-
 		preparaPainelResultadoGanhadores();
-
 	}
 
 	public static void geraEtiquetasCubicos(Jogo jogo) {

@@ -27,6 +27,7 @@ public final class DefineDiretorio {
     private static String diretorioRaiz;
     private static String diretorioCEF;
     private static String diretorioCombinacoes;
+    private static String diretorioFiltro;
     private static final String USERPROFILE = System.getenv("USERPROFILE");
     private static final String USER_HOME = System.getProperty("user.home");
     private static final String OS_NAME = System.getProperty("os.name");
@@ -100,6 +101,30 @@ public final class DefineDiretorio {
             }
         }
         File targetDir = new File(diretorioCombinacoes);
+        if (!buildDirectory(targetDir)) {
+            throw new IOException("Não foi possível criar o diretório: " + targetDir);
+        }
+    }
+    
+    public static String getDiretorioFiltro() {
+        try {
+        	setDiretorioFiltro();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return diretorioFiltro + File.separator;
+    }
+
+    private static void setDiretorioFiltro() throws IOException {
+
+        if (OS_NAME.toLowerCase().contains("windows")) {
+        	diretorioFiltro = (USERPROFILE + "\\AppData\\Local\\GENESE\\serial\\filtro");
+        } else {
+            if (OS_NAME.toLowerCase().contains("linux")) {
+            	diretorioFiltro = (USER_HOME + "/.genese/serial/filtro");
+            }
+        }
+        File targetDir = new File(diretorioFiltro);
         if (!buildDirectory(targetDir)) {
             throw new IOException("Não foi possível criar o diretório: " + targetDir);
         }
