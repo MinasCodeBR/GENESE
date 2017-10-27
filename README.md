@@ -6,7 +6,9 @@ Gerador de Números e Estatísticas para Mega-Sena
 
 <div>
 <strong>Requisitos mínimos:</strong>
+<ul>  
 <dt>Você irá precisar da última versão do gerenciador de projetos <a href="https://maven.apache.org/download.cgi">Maven</a></dt>
 <dt>O IDE Eclipse é recomendado</dt>
 <dt>2GB de memória RAM</dt>
+</ul>
 </div>
