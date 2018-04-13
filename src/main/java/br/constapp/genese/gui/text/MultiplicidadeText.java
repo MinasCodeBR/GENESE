@@ -37,7 +37,7 @@ public class MultiplicidadeText {
 		FabricaDeJogos.criaJogo(scan.getListaSorteios());
 		List<Jogo> listaJogos = FabricaDeJogos.getListaJogos();
 
-		for (int i = 2; i <= 60; i++) {
+		for (int i = 2; i <= 30; i++) {
 
 			Multiplicidade multiplicidade = new Multiplicidade(listaJogos, i);
 
@@ -170,19 +170,6 @@ public class MultiplicidadeText {
 			PainelResultadoAnalises
 					.setTextArea("2 múltiplos de " + multiplicidade.getMultiplosDe() + ":                  "
 							+ Calc.porcentagem(multiplicidade.getLista2Multiplos().size(), numCombinacoes) + "%\n");
-
-			PainelResultadoAnalises.setTextArea("nenhum múltiplo de " + multiplicidade.getMultiplosDe() + ":          "
-					+ Calc.porcentagem(multiplicidade.getLista0Multiplo().size(), numCombinacoes) + "%\n\n");
-
-			PainelResultadoAnalises.setTextArea(
-					"múltiplos de " + i + ": \n" + Arrays.toString(multiplicidade.defineMultiplosDe(i)) + "\n\n");
-
-		}
-		if (i >= 31 && i <= 60) {
-
-			PainelResultadoAnalises
-					.setTextArea("1 múltiplo de " + multiplicidade.getMultiplosDe() + ":                   "
-							+ Calc.porcentagem(multiplicidade.getLista1Multiplo().size(), numCombinacoes) + "%\n");
 
 			PainelResultadoAnalises.setTextArea("nenhum múltiplo de " + multiplicidade.getMultiplosDe() + ":          "
 					+ Calc.porcentagem(multiplicidade.getLista0Multiplo().size(), numCombinacoes) + "%\n\n");

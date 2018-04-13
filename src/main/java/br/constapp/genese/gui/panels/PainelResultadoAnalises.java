@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2017  Rafael Teixeira
+ *     Copyright (C)  2018  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -29,6 +29,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
 import br.constapp.genese.gui.text.CubicosText;
+import br.constapp.genese.gui.text.DistanciaText;
 import br.constapp.genese.gui.text.FaixaDeNumerosText;
 import br.constapp.genese.gui.text.FibonacciText;
 import br.constapp.genese.gui.text.MaisMenosText;
@@ -37,11 +38,16 @@ import br.constapp.genese.gui.text.ParOuImparText;
 import br.constapp.genese.gui.text.PrimalidadeText;
 import br.constapp.genese.gui.text.QuadrantesText;
 import br.constapp.genese.gui.text.QuadraticosText;
+import br.constapp.genese.gui.text.SequenciaText;
 
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+import java.awt.Insets;
+import javax.swing.border.EtchedBorder;
 
 public class PainelResultadoAnalises extends JPanel {
 
@@ -50,10 +56,12 @@ public class PainelResultadoAnalises extends JPanel {
 	private JComboBox<String> comboBox;
 	private static JPanel painelTextArea;
 	private static JTextArea textArea;
+	private static JButton botaoLimpaTela;
 
 	public PainelResultadoAnalises() {
 
 		preparaComboBox();
+		preparaBotaoLimpaTela();
 		preparaPainelTextArea();
 		preparaPainelResultadoAnalises();
 
@@ -63,6 +71,22 @@ public class PainelResultadoAnalises extends JPanel {
 
 		textArea.append(text);
 	}
+	
+	private void preparaBotaoLimpaTela() {
+		
+		botaoLimpaTela = new JButton("X");
+		botaoLimpaTela.setMargin(new Insets(5, 5, 5, 5));
+		botaoLimpaTela.setOpaque(false);
+		botaoLimpaTela.setIconTextGap(0);
+		botaoLimpaTela.setFocusable(false);
+		botaoLimpaTela.setFocusPainted(false);
+		
+		botaoLimpaTela.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				textArea.setText("");				
+			}
+		});
+	}
 
 	private void preparaPainelTextArea() {
 
@@ -71,11 +95,13 @@ public class PainelResultadoAnalises extends JPanel {
 		painelTextArea.setBorder(null);
 
 		textArea = new JTextArea();
+		textArea.setBorder(null);
 		textArea.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textArea.setEditable(false);
 		textArea.setLineWrap(true);
 
 		JScrollPane barraRolagemTxtArea = new JScrollPane();
+		barraRolagemTxtArea.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		barraRolagemTxtArea.setViewportView(textArea);
 		GroupLayout gl_painelTextArea = new GroupLayout(painelTextArea);
 		gl_painelTextArea.setHorizontalGroup(gl_painelTextArea.createParallelGroup(Alignment.LEADING)
@@ -95,16 +121,29 @@ public class PainelResultadoAnalises extends JPanel {
 		painelResultadoAnalises.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		painelResultadoAnalises.setBorder(null);
 		painelResultadoAnalises.setBackground(Color.WHITE);
+		
 
 		GroupLayout gl_painelResultadoAnalises = new GroupLayout(painelResultadoAnalises);
-		gl_painelResultadoAnalises.setHorizontalGroup(gl_painelResultadoAnalises.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_painelResultadoAnalises.createSequentialGroup().addContainerGap()
-						.addComponent(comboBox, 0, 511, Short.MAX_VALUE).addContainerGap())
-				.addComponent(painelTextArea, GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE));
-		gl_painelResultadoAnalises.setVerticalGroup(gl_painelResultadoAnalises.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_painelResultadoAnalises.createSequentialGroup().addGap(25)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE).addGap(18)
-						.addComponent(painelTextArea, GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)));
+		gl_painelResultadoAnalises.setHorizontalGroup(
+			gl_painelResultadoAnalises.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_painelResultadoAnalises.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 356, Short.MAX_VALUE)
+					.addComponent(botaoLimpaTela)
+					.addContainerGap())
+				.addComponent(painelTextArea, GroupLayout.DEFAULT_SIZE, 531, Short.MAX_VALUE)
+		);
+		gl_painelResultadoAnalises.setVerticalGroup(
+			gl_painelResultadoAnalises.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_painelResultadoAnalises.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_painelResultadoAnalises.createParallelGroup(Alignment.BASELINE)
+						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(botaoLimpaTela, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(painelTextArea, GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE))
+		);
 
 		painelResultadoAnalises.setLayout(gl_painelResultadoAnalises);
 
@@ -117,12 +156,12 @@ public class PainelResultadoAnalises extends JPanel {
 	private void preparaComboBox() {
 
 		String[] classesAnalise = new String[] { "Cúbicos", "Fibonacci", "Par ou Ímpar", "Primalidade", "Quadráticos",
-				"Mais e Menos Sorteados", "Quadrantes" ,"Faixa de números", "Multiplicidade"};
+				"Mais e Menos Sorteados", "Quadrantes" ,"Faixa de números", "Multiplicidade", "Distância", "Sequência"};
 
 		DefaultComboBoxModel<String> comboModel = new DefaultComboBoxModel<String>(classesAnalise);
 
 		comboBox = new JComboBox<String>(comboModel);
-		comboBox.setMaximumRowCount(9);
+		comboBox.setMaximumRowCount(11);
 		comboBox.setRequestFocusEnabled(false);
 
 		comboBox.addActionListener(new ActionListener() {
@@ -193,6 +232,20 @@ public class PainelResultadoAnalises extends JPanel {
 					textArea.setText("");
 					textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
 					QuadrantesText.processaQuadrantes();
+				}
+				
+				if (comboBox.getSelectedItem() == "Distância") {
+					
+					textArea.setText("");
+					textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
+					DistanciaText.processaDistancia();
+				}
+				
+				if (comboBox.getSelectedItem() == "Sequência") {
+					
+					textArea.setText("");
+					textArea.setFont(new Font("Tahoma", Font.PLAIN, 12));
+					SequenciaText.processaSequencia();
 				}
 			}
 

@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2017  Rafael Teixeira
+ *     Copyright (C)  2018  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -29,14 +29,14 @@ import br.constapp.genese.util.Calc;
 public class Jogo implements Externalizable {
 
 	private transient static final long serialVersionUID = 1L;
-	protected int concurso;
+	private int concurso;
 	private transient String dataSorteio;
-	protected int primeiraDezena;
-	protected int segundaDezena;
-	protected int terceiraDezena;
-	protected int quartaDezena;
-	protected int quintaDezena;
-	protected int sextaDezena;
+	private int primeiraDezena;
+	private int segundaDezena;
+	private int terceiraDezena;
+	private int quartaDezena;
+	private int quintaDezena;
+	private int sextaDezena;
 	private transient int numGanhadoresSena;
 	private transient int numGanhadoresQuina;
 	private transient int numGanhadoresQuadra;
@@ -80,7 +80,7 @@ public class Jogo implements Externalizable {
 	}
 
 	@Override
-	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+	public void readExternal(ObjectInput in) throws IOException {
 
 		concurso = in.readInt();
 		primeiraDezena = in.readInt();

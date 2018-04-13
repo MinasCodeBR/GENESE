@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2017  Rafael Teixeira
+ *     Copyright (C)  2018  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -108,7 +108,7 @@ public final class DownloadAndUnzip {
         return theFile;
     }
 
-    private static void copyInputStream(InputStream in, OutputStream out) throws IOException {
+    public static void copyInputStream(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
         int len = in.read(buffer);
         while (len >= 0) {

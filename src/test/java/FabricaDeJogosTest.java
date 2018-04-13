@@ -5,22 +5,20 @@ import br.constapp.genese.jogo.modelo.Jogo;
 import java.util.List;
 
 /**
- * Criado por Rafael Teixeira
- * em 09/09/2016.
+ * Criado por Rafael Teixeira em 09/09/2016.
  */
-public class FabricaDeJogosTest {
+class FabricaDeJogosTest {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        ScannerDeHtm scan = new ScannerDeHtm();
+		ScannerDeHtm scan = new ScannerDeHtm();
+		FabricaDeJogos.criaJogo(scan.getListaSorteios());
+		List<Jogo> lista = FabricaDeJogos.getListaJogos();
 
-        FabricaDeJogos.criaJogo(scan.getListaSorteios());
+		lista.forEach(l -> System.out.println(l.getConcurso() + " " + l.getDataSorteio() + " " + l.getPrimeiraDezena()
+				+ " " + l.getSegundaDezena() + " " + l.getTerceiraDezena() + " " + l.getQuartaDezena() + " "
+				+ l.getQuintaDezena() + " " + l.getSextaDezena()));
 
-        List<Jogo> lista = FabricaDeJogos.getListaJogos();
-        lista.forEach(l -> System.out.println(l.getConcurso() + " " + l.getDataSorteio() + " " +
-                l.getPrimeiraDezena() + " " + l.getSegundaDezena() + " " + l.getTerceiraDezena() +
-        " " + l.getQuartaDezena() + " " + l.getQuintaDezena() + " " + l.getSextaDezena()));
-
-    }
+	}
 
 }

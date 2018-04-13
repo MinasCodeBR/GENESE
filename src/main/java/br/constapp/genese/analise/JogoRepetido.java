@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2017  Rafael Teixeira
+ *     Copyright (C)  2018  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -19,43 +19,47 @@
 
 package br.constapp.genese.analise;
 
-import br.constapp.genese.jogo.modelo.Jogo;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.constapp.genese.jogo.modelo.Jogo;
+
 public class JogoRepetido {
 
-    private JogoRepetido() {}
+	private JogoRepetido() {
+	}
 
-    public static void buscaJogoRepetido(List<Jogo> listaJogos) {
+	public static boolean temJogoRepetido(List<Jogo> listaJogos) {
 
-        List<String> jogosRepetidos = new ArrayList<>();
-        List<String> dezenas = new ArrayList<>();
+		List<String> jogosRepetidos = new ArrayList<>();
+		List<String> dezenas = new ArrayList<>();
 
-        listaJogos.forEach(jogo -> dezenas.add(String.valueOf(jogo)));
+		listaJogos.forEach(jogo -> dezenas.add(String.valueOf(jogo)));
 
-        Map<String, Integer> contador = new HashMap<>();
-        for (String x : dezenas) {
+		Map<String, Integer> contador = new HashMap<>();
+		for (String x : dezenas) {
 
-            if (!contador.containsKey(x)) {
-                contador.put(x, 0);
-            }
-            contador.put(x, contador.get(x) + 1);
-        }
+			if (!contador.containsKey(x)) {
+				contador.put(x, 0);
+			}
+			contador.put(x, contador.get(x) + 1);
+		}
 
-        for (Map.Entry<String, Integer> item : contador.entrySet()) {
-            if (item.getValue() >= 2) {
-                jogosRepetidos.add(item.getKey());
-                System.out.println("Jogo repetido encontrado!\n" + "(" + item.getValue() + "x) " + item.getKey());
-            }
-        }
-        if (jogosRepetidos.size() == 0) {
-            System.out.println("Sem repetições!");
-        }
+		for (Map.Entry<String, Integer> item : contador.entrySet()) {
+			if (item.getValue() >= 2) {
+				jogosRepetidos.add(item.getKey());
+				System.out.println("Jogo repetido encontrado!\n" + "(" + item.getValue() + "x) " + item.getKey());
+				return true;
+			}
+		}
+		if (jogosRepetidos.size() == 0) {
+			System.out.println("Sem repetições!");
+			return false;
+		}
+		return true;
 
-    }
+	}
 
 }

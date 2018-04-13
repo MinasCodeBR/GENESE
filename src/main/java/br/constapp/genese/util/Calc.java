@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2017  Rafael Teixeira
+ *     Copyright (C)  2018  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -25,25 +25,27 @@ import java.math.RoundingMode;
 
 public class Calc {
 
-    private Calc() {}
+	private Calc() {
+	}
 
-    public static Double porcentagem(int qtdElementos, int totalElementos) {
-        Double porcentagem = Double.valueOf(qtdElementos * 100d) / Double.valueOf(totalElementos);
+	public static Double porcentagem(int qtdElementos, int totalElementos) {
 
-        BigDecimal bd = new BigDecimal(porcentagem).setScale(2, RoundingMode.HALF_EVEN);
+		Double porcentagem = Double.valueOf(qtdElementos * 100d) / Double.valueOf(totalElementos);
 
-        return bd.doubleValue();
+		BigDecimal bd = new BigDecimal(porcentagem).setScale(2, RoundingMode.HALF_EVEN);
 
-    }
+		return bd.doubleValue();
 
-    public static BigInteger fatorial(int i) {
-        BigInteger n = BigInteger.valueOf(i);
-        while (--i > 0) {
-            n = n.multiply(BigInteger.valueOf(i));
-        }
-        return n;
-    }
-    
+	}
+
+	public static BigInteger fatorial(int i) {
+		BigInteger n = BigInteger.valueOf(i);
+		while (--i > 0) {
+			n = n.multiply(BigInteger.valueOf(i));
+		}
+		return n;
+	}
+
 	public static String zeroToLeft(int dezena) {
 		if (dezena <= 9) {
 			String dezenaConvertida = String.format("%02d", dezena);

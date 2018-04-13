@@ -1,4 +1,4 @@
-﻿    GENESE - Gerador de Números e Estatísticas para Mega-Sena
+    GENESE - Gerador de Números e Estatísticas para Mega-Sena
     Copyright (C)  2017  Rafael Teixeira
     rafaelfst@live.com
 

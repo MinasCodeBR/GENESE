@@ -10,7 +10,7 @@ import java.net.URL;
  * Criado por Rafael Teixeira
  * em 04/09/2016.
  */
-public class DownloadAndUnzipTest {
+class DownloadAndUnzipTest {
 
     private static URL url;
 

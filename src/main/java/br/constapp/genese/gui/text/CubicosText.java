@@ -58,7 +58,7 @@ public class CubicosText {
 		PainelResultadoAnalises.setTextArea("nenhum cúbico:" + "             "
 				+ Calc.porcentagem(cubicos.getLista0Cubico().size(), numCombinacoes) + "%\n\n");
 
-		PainelResultadoAnalises.setTextArea("Números cúbicos: " + Arrays.toString(cubicos.defineNumerosCubicos()));
+		PainelResultadoAnalises.setTextArea("Números cúbicos: " + Arrays.toString(Cubicos.defineNumerosCubicos()));
 	}
 
 }

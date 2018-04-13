@@ -1,20 +1,39 @@
+/*
+ *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
+ *     Copyright (C)  2018  Rafael Teixeira
+ *     rafaelfst@live.com
+ *
+ *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
+ *     dentro dos termos da Licença Pública Geral GNU como publicada pela
+ *     Fundação do Software Livre (FSF), na versão 3 da Licença, ou
+ *     (na sua opinião) qualquer versão posterior.
+ *
+ *     Este programa é distribuído na esperança de que possa ser útil,
+ *     mas SEM NENHUMA GARANTIA; sem uma garantia implícita de ADEQUAÇÃO
+ *     a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a
+ *     Licença Pública Geral GNU para maiores detalhes.
+ *
+ *     Você deve ter recebido uma cópia da Licença Pública Geral GNU junto
+ *     com este programa. Se não, veja <http://www.gnu.org/licenses/>.
+ */
+
 package br.constapp.genese.analise;
 
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
-import br.constapp.genese.analise.modelo.ModeloMaisMenos;
+import br.constapp.genese.analise.modelo.ModeloAnalise;
 import br.constapp.genese.jogo.modelo.Jogo;
 
 public class MaisMenos {
 
 	private static Integer[] dezenas;
 	private static Integer[] contagem;
-	private static ModeloMaisMenos[] arrayModelos;
-	private static ModeloMaisMenos[] arrayModelosOrganizado;
+	private static ModeloAnalise[] arrayModelos;
+	private static ModeloAnalise[] arrayModelosOrganizado;
 
-	private static ModeloMaisMenos modelo;
+	private static ModeloAnalise modelo;
 
 	public MaisMenos(int numDezenas, List<Jogo> listaJogos) {
 		contaRepeticoes(numDezenas, listaJogos);
@@ -22,13 +41,13 @@ public class MaisMenos {
 		ordenaArrayModelos(numDezenas);
 	}
 
-	private static ModeloMaisMenos[] ordenaArrayModelos(int numDezenas) {
+	private static ModeloAnalise[] ordenaArrayModelos(int numDezenas) {
 
-		arrayModelosOrganizado = new ModeloMaisMenos[numDezenas];
+		arrayModelosOrganizado = new ModeloAnalise[numDezenas];
 
-		Arrays.sort(arrayModelos, new Comparator<ModeloMaisMenos>() {
+		Arrays.sort(arrayModelos, new Comparator<ModeloAnalise>() {
 			@Override
-			public int compare(ModeloMaisMenos b1, ModeloMaisMenos b2) {
+			public int compare(ModeloAnalise b1, ModeloAnalise b2) {
 
 				if (b1.getRepeticoes() < b2.getRepeticoes()) {
 					return 1;
@@ -43,13 +62,13 @@ public class MaisMenos {
 		return arrayModelosOrganizado;
 	}
 
-	private static ModeloMaisMenos[] criaArrayModelos(int numDezenas) {
+	private static ModeloAnalise[] criaArrayModelos(int numDezenas) {
 
-		arrayModelos = new ModeloMaisMenos[numDezenas];
+		arrayModelos = new ModeloAnalise[numDezenas];
 
 		for (int i = 0; i < contagem.length; i++) {
 
-			modelo = new ModeloMaisMenos(i + 1, contagem[i]);
+			modelo = new ModeloAnalise(i + 1, contagem[i]);
 			arrayModelos[i] = modelo;
 		}
 		return arrayModelos;
@@ -103,11 +122,11 @@ public class MaisMenos {
 		return dezenas;
 	}
 
-	public ModeloMaisMenos[] getArrayModelos() {
+	public ModeloAnalise[] getArrayModelos() {
 		return arrayModelos;
 	}
 
-	public ModeloMaisMenos[] getArrayModelosOrganizado() {
+	public ModeloAnalise[] getArrayModelosOrganizado() {
 		return arrayModelosOrganizado;
 	}
 

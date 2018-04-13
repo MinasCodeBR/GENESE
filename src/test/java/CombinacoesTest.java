@@ -11,7 +11,7 @@ import java.util.List;
  * Criado por Rafael Teixeira
  * em 25/09/16.
  */
-public class CombinacoesTest {
+class CombinacoesTest {
 
     private static Integer[] numeros;
     private static List<Jogo> combinacoes;

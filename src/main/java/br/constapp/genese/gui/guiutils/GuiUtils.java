@@ -1,6 +1,6 @@
 /*
  *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2017  Rafael Teixeira
+ *     Copyright (C)  2018  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -27,7 +27,7 @@ public class GuiUtils {
 		scrollToVisible(table, rowIndex, 0);
 	}
 
-	public static void scrollToVisible(JTable table, int rowIndex, int vColIndex) {
+	private static void scrollToVisible(JTable table, int rowIndex, int vColIndex) {
 		if (!(table.getParent() instanceof JViewport))
 			return;
 

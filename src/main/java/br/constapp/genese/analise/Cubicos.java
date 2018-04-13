@@ -1,6 +1,6 @@
 /*
   *     GENESE - Gerador de Números e Estatísticas para Mega-Sena
- *     Copyright (C)  2017  Rafael Teixeira
+ *     Copyright (C)  2018  Rafael Teixeira
  *     rafaelfst@live.com
  *
  *     GENESE é um software livre: você pode redistribuí-lo e/ou modificá-lo
@@ -32,7 +32,7 @@ public class Cubicos {
         executaCubicos(listaJogos);
     }
 
-    public Integer[] defineNumerosCubicos() {
+    public static Integer[] defineNumerosCubicos() {
         Integer[] numerosCubicos = new Integer[3];
         for (int n = 1; n <= 3; n++) {
             numerosCubicos[n - 1] = (int) Math.pow(n, 3);
