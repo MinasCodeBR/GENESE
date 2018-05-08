@@ -23,7 +23,7 @@ import java.util.List;
 
 import br.constapp.genese.jogo.modelo.Jogo;
 
-public class ModeloAnalise {
+public class ModeloAnalise implements Comparable<ModeloAnalise> {
 
 	private int numero;
 	private int repeticoes;
@@ -44,6 +44,17 @@ public class ModeloAnalise {
 		this.repeticoes = repeticoes;
 		this.lista = lista;
 	}
+	
+	@Override
+	public int compareTo(ModeloAnalise outroModelo) {
+		 if (this.repeticoes > outroModelo.getRepeticoes()) {
+	          return -1;
+	     }
+	     if (this.repeticoes < outroModelo.getRepeticoes()) {
+	          return 1;
+	     }
+	     return 0;
+	}
 
 	@Override
 	public String toString() {
@@ -61,5 +72,4 @@ public class ModeloAnalise {
 	public List<Jogo> getLista() {
 		return lista;
 	}
-
 }

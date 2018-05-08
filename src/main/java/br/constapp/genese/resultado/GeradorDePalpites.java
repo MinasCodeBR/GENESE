@@ -105,7 +105,7 @@ public class GeradorDePalpites implements Runnable {
 
 		listaPosFiltro = new ArrayList<>();
 		Random r;
-		Integer[] favoritos = new Integer[] { 21, 24, 47, 49, 28, 23, 27, 34, 48, 22, 26, 32, 40, 45 };
+		Integer[] favoritos = new Integer[] { 24, 21, 47, 26, 9, 23, 27, 30, 44, 45 };
 
 		PainelResultadoPalpites.setProgressBar(true);
 		PainelResultadoPalpites.setLblDisplay("Gerando, aguarde...");
@@ -115,7 +115,7 @@ public class GeradorDePalpites implements Runnable {
 		r = new Random();
 
 		if (PainelResultadoPalpites.getChckbxUsarFav().isSelected()) {
-			num = favoritos[r.nextInt(13)];
+			num = favoritos[r.nextInt(9)];
 		} else {
 			num = r.nextInt(50) + 1;
 		}
