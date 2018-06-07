@@ -189,7 +189,7 @@ public final class DefineDiretorio implements Runnable {
 
 				String nomeArquivo = "lista_" + i + ".ser";
 
-				InputStream file = getClass().getClassLoader().getResourceAsStream("res/serial/filtro/" + nomeArquivo);
+				InputStream file = getClass().getClassLoader().getResourceAsStream("serial/filtro/" + nomeArquivo);
 				File outPutFile = new File(DefineDiretorio.getDiretorioFiltro() + nomeArquivo);
 
 				try {
