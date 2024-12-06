@@ -4,7 +4,7 @@
  *
  * Autor: Rafael Teixeira
  * Email: rafaelfst@live.com
- * Versão: 1.0
+ * Versão: 0.0.1
  * Licença: GNU General Public License v3.0
  * 
  * Este programa é um software livre: você pode redistribuí-lo e/ou
@@ -62,28 +62,29 @@ public class DownloadMegaSenaSpreadsheet {
             JOptionPane.showMessageDialog(null, "Você não está conectado a Internet.", "Sem conexão",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            accessWebsite(url);
-        }
+            if (accessWebsite(url)) {
+                String newFileName = "MegaSena.xlsx";
 
-        String newFileName = "MegaSena.xlsx";
-
-        if (fileExistsWithFileName(downloadsDirectory, newFileName)) {
-            deleteFilesWithFileName(downloadsDirectory, newFileName);
-        }
-
-        File latestDownloadedFile = findLatestDownloadedFile(downloadsDirectory);
-        if (latestDownloadedFile != null) {
-            renameFile(latestDownloadedFile, newFileName);
-            System.out.println("Arquivo renomeado com sucesso!");
-        } else {
-            System.out.println("Nenhum arquivo encontrado no diretório.");
+                File latestDownloadedFile = findLatestDownloadedFile(downloadsDirectory);
+                if (latestDownloadedFile != null) {
+                    if (fileExistsWithFileName(downloadsDirectory, newFileName)) {
+                        deleteFilesWithFileName(downloadsDirectory, newFileName);
+                    }
+                    renameFile(latestDownloadedFile, newFileName);
+                    System.out.println("Download realizado! Arquivo salvo em: " + downloadsDirectory);
+                } else {
+                    System.out.println("Nenhum arquivo encontrado no diretório após o download.");
+                }
+            } else {
+                System.out.println("Falha ao acessar o site ou baixar a planilha.");
+            }
         }
     }
 
-    private void accessWebsite(String url) {
+    private boolean accessWebsite(String url) {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
+        // options.addArguments("--headless=new");
 
         Map<String, Object> prefs = new HashMap<>();
         prefs.put("download.default_directory", downloadsDirectory);
@@ -94,19 +95,20 @@ public class DownloadMegaSenaSpreadsheet {
         try {
             driver.get(url);
 
-            downloadSpreadsheet(driver);
+            return downloadSpreadsheet(driver);
 
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         } finally {
             driver.close();
         }
     }
 
-    private void downloadSpreadsheet(WebDriver driver) {
+    private boolean downloadSpreadsheet(WebDriver driver) {
         try {
-            WebElement downloadButton = new WebDriverWait(driver, Duration.ofSeconds(10)).until(
-                    ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"resultados\"]/div/ul/li/a")));
+            WebElement downloadButton = new WebDriverWait(driver, Duration.ofSeconds(5)).until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"btnResultados\"]")));
             downloadButton.click();
 
             try {
@@ -115,7 +117,7 @@ public class DownloadMegaSenaSpreadsheet {
                 e.printStackTrace();
             }
 
-            System.out.println("Download completed!");
+            return true;
         } catch (TimeoutException timeOut) {
             JOptionPane.showMessageDialog(null,
                     "Tempo limite atingido. O sistema da Caixa pode estar sobrecarregado ou offline. Por favor, tente novamente mais tarde.\n"
@@ -129,6 +131,7 @@ public class DownloadMegaSenaSpreadsheet {
                             + "Nesse caso, você precisará esperar que este programa seja atualizado.\n\n" + noElement,
                     "ELEMENT NOT FOUND", JOptionPane.ERROR_MESSAGE);
         }
+        return false;
     }
 
     public static long getLastModifiedTime(Path path) {
@@ -144,7 +147,8 @@ public class DownloadMegaSenaSpreadsheet {
     public static File findLatestDownloadedFile(String directory) {
         try (Stream<Path> stream = Files.walk(Paths.get(directory), FileVisitOption.FOLLOW_LINKS)) {
             return stream.filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".xlsx"))
-                    .max(Comparator.comparingLong(DownloadMegaSenaSpreadsheet::getLastModifiedTime)).orElse(null).toFile();
+                    .max(Comparator.comparingLong(DownloadMegaSenaSpreadsheet::getLastModifiedTime)).orElse(null)
+                    .toFile();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -177,7 +181,7 @@ public class DownloadMegaSenaSpreadsheet {
     public static void deleteFile(Path path) {
         try {
             Files.delete(path);
-            System.out.println("File deleted: " + path);
+            System.out.println("Planilha anterior deletada.");
         } catch (IOException e) {
             e.printStackTrace();
         }

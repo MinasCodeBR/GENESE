@@ -4,7 +4,7 @@
  *
  * Autor: Rafael Teixeira
  * Email: rafaelfst@live.com
- * Versão: 1.0
+ * Versão: 0.0.1
  * Licença: GNU General Public License v3.0
  * 
  * Este programa é um software livre: você pode redistribuí-lo e/ou
