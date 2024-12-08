@@ -44,7 +44,7 @@ public class Fibonacci<T extends ConfigurableCombination> extends AnalysisHandle
 	public Integer[] defineNumbers() {
 		List<Integer> fibonacciList = new ArrayList<>();
 		int a = 0, b = 1;
-		while (b <= gameType.getMaxRange()) { // Gera números Fibonacci dentro do intervalo do jogo
+		while (b <= gameType.getMaxRange()) {
 			int next = a + b;
 			a = b;
 			b = next;

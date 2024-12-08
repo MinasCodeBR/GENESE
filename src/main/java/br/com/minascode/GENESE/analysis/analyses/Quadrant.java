@@ -54,13 +54,12 @@ public class Quadrant<T extends ConfigurableCombination> extends AnalysisHandler
         this.selectedQuadrant = quadrant;
 
         // Obtém informações do tipo de jogo
-        int totalNumbers = gameType.getMaxRange();       // Total de números no jogo
-        int lineCount = gameType.getLineCount();        // Número de linhas no jogo
-        int numbersPerLine = totalNumbers / lineCount;  // Números por linha
+        int totalNumbers = gameType.getMaxRange(); 
+        int lineCount = gameType.getLineCount();
+        int numbersPerLine = totalNumbers / lineCount;
 
         List<Integer> quadrantNumbers = new ArrayList<>();
 
-        // Calcula o início e o fim para as linhas e colunas do quadrante
         int startRow = ((quadrant - 1) / 2) * (lineCount / 2);      // Parte superior/inferior
         int startCol = ((quadrant - 1) % 2) * (numbersPerLine / 2); // Parte esquerda/direita
 

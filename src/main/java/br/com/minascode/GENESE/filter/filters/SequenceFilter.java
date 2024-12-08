@@ -43,7 +43,6 @@ public class SequenceFilter<T extends ConfigurableCombination> implements Filter
 
         Sequence<T> sequence = new Sequence<>(combinations, gameType);
 
-        // Remover todas as sequências indesejadas
         combinations.removeAll(sequence.getFullSequence());
 
         return combinations;

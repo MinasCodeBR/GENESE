@@ -46,8 +46,7 @@ class MegaSenaFilterTest {
 
 		CombinationFilterManager<MegaSena> filterManager = new CombinationFilterManager<MegaSena>(DefineDirectory.getMegaSenaCombinationDir(), 
 				DefineDirectory.getMegaSenaFilterDir(), drawList, cutStrategy, LotteryGameType.MEGA_SENA);
-		
-        // Inicia o processamento dos arquivos no diretório de combinações
+
         System.out.println("Iniciando o processamento...");
         filterManager.processCombinations();
         System.out.println("Processamento concluído.");

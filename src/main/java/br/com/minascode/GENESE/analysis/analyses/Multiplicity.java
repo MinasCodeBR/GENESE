@@ -52,8 +52,7 @@ public class Multiplicity<T extends ConfigurableCombination> extends AnalysisHan
     @Override
     public Integer[] defineNumbers(int n) {
         this.multipleOf = n;
-
-        // Calculate the multiples within the range of the game type
+        
         multiplesList = new ArrayList<>();
         for (int i = 1; i <= gameType.getMaxRange(); i++) {
             if (i % multipleOf == 0) {

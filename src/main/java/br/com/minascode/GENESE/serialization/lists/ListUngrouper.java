@@ -57,7 +57,6 @@ public class ListUngrouper<T extends ConfigurableCombination> {
             return;
         }
 
-        // Cria o diretório de saída, se necessário
         File outputFolder = new File(outputDirectory);
         if (!outputFolder.exists() && !outputFolder.mkdirs()) {
             LOGGER.severe("Não foi possível criar o diretório de saída: " + outputDirectory);
@@ -69,7 +68,6 @@ public class ListUngrouper<T extends ConfigurableCombination> {
 
         for (File inputFile : inputFiles) {
             try {
-                // Desserializa o arquivo atual
                 @SuppressWarnings("unchecked")
                 List<T> combinations = (List<T>) Deserializer.deserialize(inputFile.getPath());
 
@@ -77,7 +75,6 @@ public class ListUngrouper<T extends ConfigurableCombination> {
                     for (T combination : combinations) {
                         currentBatch.add(combination);
 
-                        // Quando o batch atingir o tamanho máximo, serializa e limpa a lista
                         if (currentBatch.size() == listSize) {
                             serializeBatch(currentBatch, fileNumber);
                             currentBatch.clear();
@@ -90,8 +87,6 @@ public class ListUngrouper<T extends ConfigurableCombination> {
                 LOGGER.log(Level.SEVERE, "Erro ao processar o arquivo " + inputFile.getName() + ": " + e.getMessage(), e);
             }
         }
-
-        // Serializa o restante, se houver
         if (!currentBatch.isEmpty()) {
             try {
                 serializeBatch(currentBatch, fileNumber);

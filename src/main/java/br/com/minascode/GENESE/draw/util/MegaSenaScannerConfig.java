@@ -34,7 +34,7 @@ public class MegaSenaScannerConfig implements GameScannerConfig {
 
     @Override
     public int getDrawStep() {
-        return 18; // Passo para MegaSena
+        return 18;
     }
 
 	@Override

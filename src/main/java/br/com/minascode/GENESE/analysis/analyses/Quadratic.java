@@ -42,11 +42,11 @@ public class Quadratic<T extends ConfigurableCombination> extends AnalysisHandle
     @Override
     public Integer[] defineNumbers() {
         List<Integer> squareNumbers = new ArrayList<>();
-        int maxRange = gameType.getMaxRange(); // Máximo do intervalo do jogo
+        int maxRange = gameType.getMaxRange();
 
         for (int n = 1; ; n++) {
             int square = (int) Math.pow(n, 2);
-            if (square > maxRange) break; // Para quando o número quadrado ultrapassa o limite
+            if (square > maxRange) break;
             squareNumbers.add(square);
         }
 

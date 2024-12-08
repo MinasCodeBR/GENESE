@@ -25,7 +25,7 @@ package br.com.minascode.GENESE.draw.util;
 
 public interface GameScannerConfig {	
 	String getSheetPath();
-    int getDrawStep(); // Define o passo para os sorteios (18 para MegaSena, 15 para LotoFacil, etc.)
-    boolean requiresCleanDrawList(); // Indica se a limpeza deve ser aplicada
+    int getDrawStep();
+    boolean requiresCleanDrawList(); 
 
 }

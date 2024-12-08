@@ -55,7 +55,6 @@ public class QuadrantTest<T extends ConfigurableCombination> implements LotteryA
 		for (quadrantNumber = 1; quadrantNumber <= 4; quadrantNumber++) {
 			quadrant = new Quadrant<>(draws, quadrantNumber, gameType);
 
-			// Exibe os números do quadrante
 			System.out.print("Quadrante " + quadrantNumber + ": ");
 			Integer[] quadrantNumbers = quadrant.defineNumbers(quadrantNumber);
 			System.out.println(Arrays.toString(quadrantNumbers));

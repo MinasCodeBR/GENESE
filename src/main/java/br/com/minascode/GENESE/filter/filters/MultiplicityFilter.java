@@ -52,7 +52,6 @@ public class MultiplicityFilter<T extends ConfigurableCombination> implements Fi
 
 		for (List<Integer> number : multiplesToRemove) {
 			if (number.size() < 2) {
-				// Evita erros de índice em caso de dados inesperados
 				System.err.println("Dados de remoção inválidos: " + number);
 				continue;
 			}

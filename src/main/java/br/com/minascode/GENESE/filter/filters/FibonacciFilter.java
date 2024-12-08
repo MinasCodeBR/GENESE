@@ -45,10 +45,8 @@ public class FibonacciFilter<T extends ConfigurableCombination> implements Filte
     public List<T> customFilter(List<T> combinations) {
         if (combinations.isEmpty()) return combinations;
 
-        // Cria o analisador de Fibonacci com base nas combinações e no tipo de jogo
         Fibonacci<T> fibonacci = new Fibonacci<>(combinations, gameType);
 
-        // Remove todas as combinações que contêm os números de Fibonacci especificados
         @SuppressWarnings("unchecked")
         List<Integer> fibonacciToRemove = (List<Integer>) removalCriteria.getRemovalResult("fibonacciToRemove");
         if (fibonacciToRemove != null) {

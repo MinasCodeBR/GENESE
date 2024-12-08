@@ -40,12 +40,11 @@ class AnalysisEngine<T extends ConfigurableCombination> {
     private final LotteryGameType gameType;
 
     protected AnalysisEngine(List<T> drawList, Integer[] genericArray, LotteryGameType gameType) {
-        this.gameType = gameType; // Configuração do tipo de jogo
+        this.gameType = gameType;
         process(drawList, genericArray);
     }
 
     private void process(List<T> drawList, Integer[] genericArray) {
-        // Inicializar as listas com base no range do tipo de jogo
         incidenceLists = new ArrayList<>();
         for (int i = 0; i <= gameType.getSelectionSize(); i++) {
             incidenceLists.add(new ArrayList<>());

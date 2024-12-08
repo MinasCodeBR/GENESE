@@ -45,10 +45,8 @@ public class DistanceFilter<T extends ConfigurableCombination> implements Filter
     public List<T> customFilter(List<T> combinations) {
         if (combinations.isEmpty()) return combinations;
 
-        // Cria o analisador de distância com base nas combinações e no tipo de jogo
         Distance<T> distance = new Distance<>(combinations, gameType);
 
-        // Remove todas as combinações que contêm as distâncias especificadas
         @SuppressWarnings("unchecked")
         List<Integer> distancesToRemove = (List<Integer>) removalCriteria.getRemovalResult("distancesToRemove");
         if (distancesToRemove != null) {

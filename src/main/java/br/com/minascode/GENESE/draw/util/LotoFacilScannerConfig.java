@@ -34,7 +34,7 @@ public class LotoFacilScannerConfig implements GameScannerConfig {
 
     @Override
     public int getDrawStep() {
-        return 31; // Passo para LotoFacil
+        return 31;
     }
 
 	@Override

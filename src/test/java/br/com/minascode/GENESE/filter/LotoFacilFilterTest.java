@@ -46,8 +46,7 @@ class LotoFacilFilterTest {
 
 		CombinationFilterManager<LotoFacil> filterManager = new CombinationFilterManager<LotoFacil>(DefineDirectory.getLotoFacilCombinationDir(), 
 				DefineDirectory.getLotoFacilFilterDir(), drawList, cutStrategy, LotteryGameType.LOTO_FACIL);
-		
-        // Inicia o processamento dos arquivos no diretório de combinações
+
         System.out.println("Iniciando o processamento...");
         filterManager.processCombinations();
         System.out.println("Processamento concluído.");

@@ -33,11 +33,11 @@ import br.com.minascode.GENESE.combination.lottery.LotteryGameType;
 
 public class Distance<T extends ConfigurableCombination> extends AnalysisHandler<T> {
 
-    private Integer[] distanceIntervals; // Possíveis distâncias
-    private Integer[] occurrenceCount; // Contagem de ocorrências para cada intervalo
-    private List<T>[] drawsByDistance; // Jogos categorizados por distância
+    private Integer[] distanceIntervals;
+    private Integer[] occurrenceCount;
+    private List<T>[] drawsByDistance; 
     private int maxDistance;
-    private final LotteryGameType gameType; // Tipo de jogo para determinar o intervalo
+    private final LotteryGameType gameType;
 
     public Distance(List<T> drawList, LotteryGameType gameType) {
         this.gameType = gameType;
@@ -46,7 +46,6 @@ public class Distance<T extends ConfigurableCombination> extends AnalysisHandler
 
     @Override
     public Integer[] defineNumbers() {
-        // Define os intervalos de distâncias possíveis com base no intervalo do jogo
         maxDistance = gameType.getMaxRange() - gameType.getMinRange(); 
         distanceIntervals = new Integer[maxDistance];
         for (int i = 0; i < maxDistance; i++) {
@@ -73,15 +72,13 @@ public class Distance<T extends ConfigurableCombination> extends AnalysisHandler
             occurrenceCount[i] = 0;
             drawsByDistance[i] = new ArrayList<>();
         }
-
-        // Processa as distâncias específicas
+        
         for (T draw : drawList) {
             calculateDistances(draw, genericArray);
         }
     }
 
     private void calculateDistances(T draw, Integer[] intervals) {
-        // Ordena os números do sorteio
         int[] numbers = draw.getNumbers();
         Arrays.sort(numbers);
 

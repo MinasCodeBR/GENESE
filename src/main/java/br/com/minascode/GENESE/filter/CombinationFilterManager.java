@@ -99,10 +99,8 @@ public class CombinationFilterManager<T extends ConfigurableCombination> {
             List<T> combinations = (List<T>) Deserializer.deserialize(file.getPath());           
 
             if (combinations != null && !combinations.isEmpty()) {
-                // Aplica os filtros às combinações
                 combinations = applyFilters(combinations);
 
-                // Serializa o resultado para o diretório de saída com o mesmo nome de arquivo
                 String outputPath = new File(filterDirectory, file.getName()).getPath();
                 Serializer.serialize(outputPath, combinations);
             }
@@ -113,7 +111,6 @@ public class CombinationFilterManager<T extends ConfigurableCombination> {
     }
 
     private List<T> applyFilters(List<T> combinations) {
-        // Cria a lista de filtros, instanciando-os com o tipo de jogo apropriado e a instância de RemovalCriteria
         List<Filter<T>> filters = List.of(
                 new DistanceFilter<>(removalCriteria, gameType),
                 new MultiplicityFilter<>(removalCriteria, gameType), 

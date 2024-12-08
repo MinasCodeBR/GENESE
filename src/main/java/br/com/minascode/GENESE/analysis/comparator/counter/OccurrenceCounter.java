@@ -31,12 +31,10 @@ import br.com.minascode.GENESE.combination.ConfigurableCombination;
 
 public class OccurrenceCounter {
 
-    // Método genérico para contar ocorrências de combinações
     public static <T extends ConfigurableCombination> Map<Integer, Integer> countOccurrences(List<T> combinations) {
         Map<Integer, Integer> counter = new HashMap<>();
 
         for (T combination : combinations) {
-            // Supondo que a combinação tenha um método `getId` único para identificar cada combinação
             int id = combination.getId();
             counter.put(id, counter.getOrDefault(id, 0) + 1);
         }

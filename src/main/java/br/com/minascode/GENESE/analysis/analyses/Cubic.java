@@ -42,11 +42,11 @@ public class Cubic<T extends ConfigurableCombination> extends AnalysisHandler<T>
     @Override
     public Integer[] defineNumbers() {
         List<Integer> cubicNumbers = new ArrayList<>();
-        int maxRange = gameType.getMaxRange(); // Máximo do intervalo do jogo
+        int maxRange = gameType.getMaxRange();
 
         for (int n = 1; ; n++) {
             int cubic = (int) Math.pow(n, 3);
-            if (cubic > maxRange) break; // Para quando o número cúbico ultrapassa o limite
+            if (cubic > maxRange) break;
             cubicNumbers.add(cubic);
         }
 

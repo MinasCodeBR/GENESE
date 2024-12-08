@@ -41,19 +41,19 @@ public class OddOrEven<T extends ConfigurableCombination> extends AnalysisHandle
         this.parity = parity;
         this.gameType = gameType;
         Integer[] definedNumbers = defineNumbers();
-        process(drawList, definedNumbers, gameType); // Chama o método genérico
+        process(drawList, definedNumbers, gameType);
     }
 
     @Override
     public Integer[] defineNumbers() {
         List<Integer> numbers = new ArrayList<>();
-        int maxNumber = gameType.getMaxRange(); // Adapta ao tipo de loteria (ex.: 60 para Mega-Sena, 25 para Loto Fácil)
+        int maxNumber = gameType.getMaxRange();
         
         for (int i = 1; i <= maxNumber; i++) {
             if (parity == EVEN && i % 2 == 0) {
-                numbers.add(i); // Números pares
+                numbers.add(i); 
             } else if (parity == ODD && i % 2 != 0) {
-                numbers.add(i); // Números ímpares
+                numbers.add(i);
             }
         }
         return numbers.toArray(new Integer[0]);

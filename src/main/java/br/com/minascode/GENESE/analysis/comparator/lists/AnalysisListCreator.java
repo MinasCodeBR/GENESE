@@ -31,7 +31,6 @@ import br.com.minascode.GENESE.combination.ConfigurableCombination;
 
 public class AnalysisListCreator {
 
-	// Método genérico
 	public static <T extends ConfigurableCombination> AnalysisLists<T> create(List<T> drawList,
 			Integer[] genericArray) {
 		List<T> generalList = new ArrayList<>();
@@ -40,14 +39,13 @@ public class AnalysisListCreator {
 
 		for (T draw : drawList) {
 			for (int number : genericArray) {
-				// Verifica se o número está presente na combinação
 				if (NumberChecker.containsNumber(draw, number)) {
 					generalList.add(draw);
 				} else {
 					zeroList.add(draw);
 				}
 			}
-			draw.setId(drawId); // Configura o ID usando o método da interface ConfigurableCombination
+			draw.setId(drawId);
 			drawId++;
 		}
 

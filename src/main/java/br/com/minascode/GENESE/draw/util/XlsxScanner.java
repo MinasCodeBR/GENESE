@@ -51,7 +51,7 @@ public class XlsxScanner {
     @SuppressWarnings("resource")
     private void readSheet() throws IOException {
         drawList = new ArrayList<>();
-        String fileName = gameConfig.getSheetPath(); // Caminho específico do arquivo Excel
+        String fileName = gameConfig.getSheetPath();
         try (FileInputStream file = new FileInputStream(fileName)) {
             Workbook workbook = new XSSFWorkbook(file);
             Sheet sheet = workbook.getSheetAt(0); // Obter a primeira planilha
@@ -74,10 +74,8 @@ public class XlsxScanner {
             e.printStackTrace();
         }
 
-        // Limpa valores indesejados
         drawList.removeIf(p -> p.replaceAll("(?<![0-9])[./,]|[./,](?![0-9])", "").trim().isEmpty());
 
-        // Executa a limpeza final na lista apenas se necessário
         if (gameConfig.requiresCleanDrawList()) {
             cleanDrawList();
         }

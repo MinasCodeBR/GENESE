@@ -37,7 +37,6 @@ public class ConnectionTest {
             System.out.println("Conectado!");
             return true;
         } catch (Exception e) {
-            // Se não conseguir conectar, considera sem conexão
             System.out.println("Não conectado!");
             return false;
         }

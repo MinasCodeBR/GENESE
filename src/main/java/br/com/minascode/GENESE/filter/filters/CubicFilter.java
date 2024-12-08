@@ -47,10 +47,8 @@ public class CubicFilter<T extends ConfigurableCombination> implements Filter<T>
     public List<T> customFilter(List<T> combinations) {
         if (combinations.isEmpty()) return combinations;
 
-        // Cria o analisador cúbico com base nas combinações e no tipo de jogo
         Cubic<T> cubic = new Cubic<>(combinations, gameType);
 
-        // Remove todas as combinações que contêm os números cúbicos especificados
         @SuppressWarnings("unchecked")
         List<Integer> cubicsToRemove = (List<Integer>) removalCriteria.getRemovalResult("cubicsToRemove");
         if (cubicsToRemove != null) {

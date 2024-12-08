@@ -35,16 +35,13 @@ public class MegaSenaCombinationsTest {
 
 		long inicio = System.currentTimeMillis();
 
-		// Configura combinações
         CombinationFactory<MegaSena> factory = new CombinationFactory<>(
         		new MegaSenaCombination(),
                 MegaSena::new // Passa o construtor de MegaSena como Supplier
         );
 
-		// Gera combinações
 		factory.generateCombinations();
 
-		// Calcula e exibe o tempo total de execução
 		long tempoTotal = System.currentTimeMillis() - inicio;
 		if (tempoTotal < 1000) {
 			System.out.println("Tempo total: " + tempoTotal + " milissegundos");

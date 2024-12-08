@@ -49,7 +49,6 @@ public class SequenceTest<T extends ConfigurableCombination> implements LotteryA
 
 	@Override
 	public void printAnalysis() {
-		// Verifica sequências completas
 		List<T> fullSequence = sequence.getFullSequence();
 		System.out.println("Jogos com sequência completa:");
 		for (T draw : fullSequence) {
@@ -57,7 +56,6 @@ public class SequenceTest<T extends ConfigurableCombination> implements LotteryA
 		}
 		System.out.println();
 
-		// Verifica sequências parciais
 		int sequentialFieldCount = sequence.getSequentialFieldCount();
 		for (int i = 0; i < sequentialFieldCount; i++) {
 			List<T> partialSequence = sequence.getSequentialField(i);

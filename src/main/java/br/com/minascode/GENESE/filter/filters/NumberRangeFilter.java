@@ -45,17 +45,13 @@ public class NumberRangeFilter<T extends ConfigurableCombination> implements Fil
     public List<T> customFilter(List<T> combinations) {
         if (combinations.isEmpty()) return combinations;
 
-        // Obter a lista de faixas numéricas a serem removidas
         @SuppressWarnings("unchecked")
         List<List<Integer>> rangesToRemove = (List<List<Integer>>) removalCriteria.getRemovalResult("rangesToRemove");
         if (rangesToRemove == null) {
             return combinations;
         }
 
-        // Cria o analisador de faixa numérica com base nas combinações e no tipo de jogo
         NumberRange<T> numberRange = new NumberRange<>(combinations, gameType);
-
-        // Remove todas as combinações que contêm as faixas numéricas especificadas
 
         for (List<Integer> rangeToRemove : rangesToRemove) {
             int lines = rangeToRemove.get(0);

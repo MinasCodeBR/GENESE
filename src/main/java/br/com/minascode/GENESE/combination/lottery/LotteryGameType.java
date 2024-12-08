@@ -24,8 +24,8 @@
 package br.com.minascode.GENESE.combination.lottery;
 
 public enum LotteryGameType {
-    MEGA_SENA(1, 60, 6, 6), // 6 linhas com 10 números cada
-    LOTO_FACIL(1, 25, 15, 5); // 5 linhas com 5 números cada
+    MEGA_SENA(1, 60, 6, 6),
+    LOTO_FACIL(1, 25, 15, 5);
 
     private final int minRange;       // Menor número do jogo
     private final int maxRange;       // Maior número do jogo

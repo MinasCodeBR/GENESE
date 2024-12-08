@@ -34,17 +34,14 @@ public class LotoFacilCombinationsTest {
 	public static void main(String[] args) {
 
 		long inicio = System.currentTimeMillis();
-
-		// Configura combinações
+		
         CombinationFactory<LotoFacil> factory = new CombinationFactory<>(
         		new LotoFacilCombination(),
                 LotoFacil::new // Passa o construtor de MegaSena como Supplier
         );
 
-		// Gera combinações
 		factory.generateCombinations();
 
-		// Calcula e exibe o tempo total de execução
 		long tempoTotal = System.currentTimeMillis() - inicio;
 		if (tempoTotal < 1000) {
 			System.out.println("Tempo total: " + tempoTotal + " milissegundos");

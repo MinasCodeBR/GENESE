@@ -46,14 +46,12 @@ public class OddOrEvenFilter<T extends ConfigurableCombination> implements Filte
     public List<T> customFilter(List<T> combinations) {
         if (combinations.isEmpty()) return combinations;
         
-		// Cria o objeto OddOrEven com base nos critérios
 		OddOrEven<T> oddOrEven = new OddOrEven<>(combinations, OddOrEven.EVEN, gameType);
 
 		// Itera sobre os critérios de remoção
         
         List<Integer> parityToRemove = (List<Integer>) removalCriteria.getRemovalResult("parityToRemove");
 		for (Integer i : parityToRemove) {
-			// Remove combinações que atendem ao critério especificado
 			combinations.removeAll(oddOrEven.getIncidenceList(i));
 		}
 

@@ -45,10 +45,8 @@ public class PrimalityFilter<T extends ConfigurableCombination> implements Filte
     public List<T> customFilter(List<T> combinations) {
         if (combinations.isEmpty()) return combinations;
 
-        // Cria o analisador de primalidade com base nas combinações e no tipo de jogo
         Primality<T> primality = new Primality<>(combinations, gameType);
 
-        // Remove todas as combinações que contêm os números primos especificados
         @SuppressWarnings("unchecked")
         List<Integer> primesToRemove = (List<Integer>) removalCriteria.getRemovalResult("primesToRemove");
         if (primesToRemove != null) {

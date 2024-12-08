@@ -34,21 +34,20 @@ import br.com.minascode.GENESE.combination.lottery.LotteryGameType;
 
 public class NumberFrequency<T extends ConfigurableCombination> extends AnalysisHandler<T> {
 
-	private Integer[] numbers; // Todos os números possíveis do jogo
-	private Integer[] occurrenceCount; // Contagem de ocorrências para cada número
+	private Integer[] numbers;
+	private Integer[] occurrenceCount;
 	private final LotteryGameType gameType;
 
 	public NumberFrequency(List<T> drawList, LotteryGameType gameType) {
 		this.gameType = gameType;
-		numbers = defineNumbers(); // Gera o universo de números com base no jogo
+		numbers = defineNumbers();
 		occurrenceCount = new Integer[numbers.length];
-		Arrays.fill(occurrenceCount, 0); // Inicializa a contagem de ocorrências com zeros
-		process(drawList, numbers, gameType); // Processa os sorteios
+		Arrays.fill(occurrenceCount, 0);
+		process(drawList, numbers, gameType);
 	}
 
 	@Override
 	public Integer[] defineNumbers() {
-		// Cria o universo de números com base no tamanho total
 		int totalNumbers = gameType.getMaxRange();
 		Integer[] universe = new Integer[totalNumbers];
 		for (int i = 0; i < totalNumbers; i++) {
@@ -74,11 +73,9 @@ public class NumberFrequency<T extends ConfigurableCombination> extends Analysis
 		}
 	}
 
-	private void countOccurrence(T draw, Integer[] numbers) {
-		// Get the numbers of the draw
+	private void countOccurrence(T draw, Integer[] numbers) {		
 		int[] drawNumbers = draw.getNumbers();
 
-		// Update occurrence count and incidence lists
 		for (int number : drawNumbers) {
 			for (int i = 0; i < numbers.length; i++) {
 				if (number == numbers[i]) {
@@ -100,8 +97,7 @@ public class NumberFrequency<T extends ConfigurableCombination> extends Analysis
 	}
 
 	public List<Integer> getOccurrenceCountSorted() {
-		// Retorna as contagens de ocorrência ordenadas de forma consistente com os
-		// números
+		// Retorna as contagens de ocorrência ordenadas
 		return Arrays.stream(numbers).sorted((n1, n2) -> occurrenceCount[n2 - 1] - occurrenceCount[n1 - 1])
 				.map(n -> occurrenceCount[n - 1]).collect(Collectors.toList());
 	}

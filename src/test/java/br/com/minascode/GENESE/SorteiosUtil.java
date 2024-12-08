@@ -62,8 +62,8 @@ class SorteiosUtil {
 		int totalSorteios = 0;
 		int totalCombinacoes = 0;
 
-		arquivo = new File(DefineDirectory.getRootDirectory() + "print.txt"); // **
-		PrintWriter pw = new PrintWriter(new FileWriter(arquivo)); // **
+		arquivo = new File(DefineDirectory.getRootDirectory() + "print.txt");
+		PrintWriter pw = new PrintWriter(new FileWriter(arquivo));
 
 		for (int i = 1; i <= 501; i++) {
 
@@ -72,7 +72,7 @@ class SorteiosUtil {
 			try {
 				listaPalpites = ((List<MegaSena>) Deserializer
 						.deserialize(DefineDirectory.getMegaSenaFilterDir() + File.separator + nomeArquivo));
-				pw.println("\nLista " + i + ": " + listaPalpites.size()); // **
+				pw.println("\nLista " + i + ": " + listaPalpites.size());
 
 				System.out.println("\nLista " + i + ": " + listaPalpites.size());
 				conta = 0;
@@ -88,7 +88,7 @@ class SorteiosUtil {
 								&& jogoPalpite.getSixthNumber() == jogo.getSixthNumber()) {
 
 							pw.println("\nEste jogo já saiu no concurso " + jogo.getId() + " da Mega-Sena \nem "
-									+ jogo.getDate()); // **
+									+ jogo.getDate());
 
 							System.out.println("\nEste jogo já saiu no concurso " + jogo.getId()
 									+ " da Mega-Sena \nem " + jogo.getDate());
@@ -98,7 +98,7 @@ class SorteiosUtil {
 					}
 				}
 
-				pw.println("\nJogos na lista: " + conta); // **
+				pw.println("\nJogos na lista: " + conta);
 
 				System.out.println("\nJogos na lista: " + conta);
 				totalSorteios += conta;
@@ -111,7 +111,7 @@ class SorteiosUtil {
 		}
 
 		pw.println(listaPalpites.size());
-		pw.println("Total de combinações" + totalCombinacoes); // **
+		pw.println("Total de combinações" + totalCombinacoes);
 		pw.println(totalSorteios);
 
 		System.out.println("Total de combinações: " + totalCombinacoes);

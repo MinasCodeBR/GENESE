@@ -46,7 +46,6 @@ public class RemovalCriteriaTest {
         CutStrategy cutStrategy = new LotoFacilCutStrategy();
         RemovalCriteria<LotoFacil> removalCriteria = new RemovalCriteria<>(drawList, cutStrategy, LotteryGameType.LOTO_FACIL);
 
-        // Exemplo de uso
         System.out.println("Distances to Remove: " + removalCriteria.getRemovalResult("distancesToRemove"));
         System.out.println("Multiples to Remove: " + removalCriteria.getRemovalResult("multiplesToRemove"));
         System.out.println("Odd or Even to Remove: " + removalCriteria.getRemovalResult("parityToRemove"));

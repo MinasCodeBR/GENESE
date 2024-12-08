@@ -33,17 +33,13 @@ import br.com.minascode.GENESE.entities.LotoFacil;
 public class PrintLotoFacilDrawList {
 
     public static void main(String[] args) {
-        // Instanciar a classe ScannerDeXlsx
         XlsxScanner scanner = new XlsxScanner(new LotoFacilScannerConfig());
-
-        // Obter a lista de sorteios
         
         LotoFacilDrawFactory.createList(scanner.getDrawList());
         List<LotoFacil> listaSorteios = LotoFacilDrawFactory.getLotoFacilDrawsList();
         
         System.out.println(listaSorteios.size());        
 
-        // Imprimir a lista de sorteios
         for (LotoFacil sorteio : listaSorteios) {
             System.out.println("Concurso " + sorteio.getId() + ": " + sorteio + " Data: " + sorteio.getDate());
         }

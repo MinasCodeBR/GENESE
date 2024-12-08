@@ -40,13 +40,11 @@ public class Sequence<T extends ConfigurableCombination> {
     private void findSequences(List<T> drawList, LotteryGameType gameType) {
         int selectionSize = gameType.getSelectionSize();
 
-        // Inicializa as listas de sequências parciais
         sequentialFields = new ArrayList<>();
-        for (int i = 0; i < selectionSize - 1; i++) { // Agora considera pares consecutivos
+        for (int i = 0; i < selectionSize - 1; i++) {
             sequentialFields.add(new ArrayList<>());
         }
 
-        // Inicializa a lista de sequência completa
         fullSequence = new ArrayList<>();
 
         for (T draw : drawList) {
@@ -68,7 +66,7 @@ public class Sequence<T extends ConfigurableCombination> {
     }
     
     private boolean isFullSequence(int[] numbers, int sequenceLength) {
-        int count = 1; // Contador de números consecutivos
+        int count = 1;
 
         for (int i = 0; i < numbers.length - 1; i++) {
             if (numbers[i] + 1 == numbers[i + 1]) {

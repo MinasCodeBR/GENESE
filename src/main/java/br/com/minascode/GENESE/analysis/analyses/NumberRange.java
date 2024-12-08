@@ -46,7 +46,7 @@ public class NumberRange<T extends ConfigurableCombination> extends AnalysisHand
 	@Override
 	public Integer[] defineNumbers() {
 		// Define os inícios das faixas (linhas da cartela)
-		int totalNumbers = gameType.getMaxRange(); // Total de números (e.g., 60 para Mega Sena, 25 para Loto Fácil)
+		int totalNumbers = gameType.getMaxRange();
 		int numbersPerLine = totalNumbers / gameType.getLineCount(); // Números por linha
 		Integer[] lineStarts = new Integer[gameType.getLineCount()];
 
@@ -66,12 +66,11 @@ public class NumberRange<T extends ConfigurableCombination> extends AnalysisHand
 
 	@Override
 	public void process(List<T> drawList, Integer[] definedNumbers, LotteryGameType gameType) {
-		int lineCount = gameType.getLineCount(); // Número de faixas
-		int numbersPerLine = gameType.getMaxRange() / lineCount; // Tamanho de cada faixa
+		int lineCount = gameType.getLineCount();
+		int numbersPerLine = gameType.getMaxRange() / lineCount;
 
-		// Inicializa as listas de incidências: 0 a lineCount
 		incidenceLists = new ArrayList<>();
-		for (int i = 0; i <= lineCount; i++) { // Inclui a lista para incidência 0
+		for (int i = 0; i <= lineCount; i++) {
 			incidenceLists.add(new ArrayList<>());
 		}
 
@@ -79,7 +78,7 @@ public class NumberRange<T extends ConfigurableCombination> extends AnalysisHand
 		incidenceMap = new HashMap<>();
 
 		for (T draw : drawList) {
-			int[] numbers = draw.getNumbers(); // Números da combinação
+			int[] numbers = draw.getNumbers();
 			Map<Integer, Integer> currentIncidenceMap = new HashMap<>();
 
 			// Contar incidências em cada faixa
@@ -90,11 +89,9 @@ public class NumberRange<T extends ConfigurableCombination> extends AnalysisHand
 				}
 			}
 
-			// Salvar mapa de incidências para o jogo atual
 			incidenceMap.put(draw, currentIncidenceMap);
 
-			// Determinar em qual lista adicionar a combinação
-			int totalIncidences = currentIncidenceMap.size(); // Número de faixas diferentes que aparecem na combinação
+			int totalIncidences = currentIncidenceMap.size();
 			if (totalIncidences == 0) {
 				incidenceLists.get(0).add(draw);
 			} else if (totalIncidences <= lineCount) {
@@ -116,8 +113,6 @@ public class NumberRange<T extends ConfigurableCombination> extends AnalysisHand
 
 		for (List<T> incidenceList : incidenceLists) {
 			for (T draw : incidenceList) {
-				// Verifica se a combinação tem a quantidade de incidências especificada para a
-				// faixa
 				Map<Integer, Integer> currentIncidenceMap = incidenceMap.get(draw);
 				if (currentIncidenceMap != null && currentIncidenceMap.getOrDefault(lineIndex, 0) == incidenceCount) {
 					results.add(draw);

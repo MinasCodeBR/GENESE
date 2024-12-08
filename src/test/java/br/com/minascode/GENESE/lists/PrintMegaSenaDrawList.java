@@ -33,17 +33,13 @@ import br.com.minascode.GENESE.entities.MegaSena;
 public class PrintMegaSenaDrawList {
 
     public static void main(String[] args) {
-        // Instanciar a classe ScannerDeXlsx
         XlsxScanner scanner = new XlsxScanner(new MegaSenaScannerConfig());
-
-        // Obter a lista de sorteios
         
         MegaSenaDrawFactory.createList(scanner.getDrawList());
         List<MegaSena> listaSorteios = MegaSenaDrawFactory.getMegaSenaDrawsList();
         
         System.out.println(listaSorteios.size());        
 
-        // Imprimir a lista de sorteios
         for (MegaSena sorteio : listaSorteios) {
             System.out.println(sorteio);
         }

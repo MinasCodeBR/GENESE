@@ -45,10 +45,8 @@ public class QuadraticFilter<T extends ConfigurableCombination> implements Filte
     public List<T> customFilter(List<T> combinations) {
         if (combinations.isEmpty()) return combinations;
 
-        // Cria o analisador quadrático com base nas combinações e no tipo de jogo
         Quadratic<T> quadratic = new Quadratic<>(combinations, gameType);
 
-        // Remove todas as combinações que contêm os números quadráticos especificados
         @SuppressWarnings("unchecked")
         List<Integer> quadraticsToRemove = (List<Integer>) removalCriteria.getRemovalResult("quadraticsToRemove");
         if (quadraticsToRemove != null) {

@@ -1,26 +1,3 @@
-/**
- * GENESE - Gerador de Números e Estatísticas para Mega-Sena
- * Copyright (C) 2018-2024 MinasCode
- *
- * Autor: Rafael Teixeira
- * Email: rafaelfst@live.com
- * Versão: 0.0.1
- * Licença: GNU General Public License v3.0
- * 
- * Este programa é um software livre: você pode redistribuí-lo e/ou
- * modificá-lo sob os termos da Licença Pública Geral GNU, conforme
- * publicada pela Free Software Foundation, seja a versão 3 da
- * Licença, ou (a seu critério) qualquer versão posterior.
- * 
- * Este programa é distribuído na esperança de que seja útil,
- * mas SEM QUALQUER GARANTIA; sem mesmo a garantia implícita de
- * COMERCIALIZAÇÃO ou ADEQUAÇÃO A UM DETERMINADO FIM. Veja a
- * Licença Pública Geral GNU para mais detalhes.
- * 
- * Você deve ter recebido uma cópia da Licença Pública Geral GNU
- * junto com este programa. Caso contrário, veja <https://www.gnu.org/licenses/>.
- */
-
 package br.com.minascode.GENESE.serialization.lists;
 
 import java.io.File;
@@ -85,7 +62,7 @@ public class ListGrouper<T extends ConfigurableCombination> {
 
         String outputPath = new File(outputDirectory, outputFileName).getPath();
         try {
-            serializeBatch(outputPath, groupLists);
+            serialize(outputPath, groupLists);
             logger.info("Lista agrupada salva em: {}", outputPath);
         } catch (IOException e) {
             logger.error("Erro ao serializar as listas: {}", e.getMessage(), e);
@@ -93,23 +70,19 @@ public class ListGrouper<T extends ConfigurableCombination> {
     }
 
     @SuppressWarnings("unchecked")
-	private List<T> deserialize(File file) throws IOException, ClassNotFoundException {
-        // Implementação da desserialização com segurança de tipos.
+    private List<T> deserialize(File file) throws IOException, ClassNotFoundException {
         List<T> combinations = new ArrayList<>();
-		try {
-			combinations = (List<T>) Deserializer.deserialize(file.getPath());
-		} catch (Exception e) {
-			System.err.println("Erro ao converter o objeto no arquivo: " + file.getName());
-			return new ArrayList<>();
-		}
+        try {
+            combinations = (List<T>) Deserializer.deserialize(file.getPath());
+        } catch (Exception e) {
+            System.err.println("Erro ao converter o objeto no arquivo: " + file.getName());
+            return new ArrayList<>();
+        }
         return combinations;
     }
 
-    private void serializeBatch(String outputPath, List<T> groupLists) throws IOException {
-        Serializer.startBatchSerialization(outputPath);
-        for (T combination : groupLists) {
-            Serializer.serializeToBatch(combination);
-        }
-        Serializer.endBatchSerialization();
+    private void serialize(String outputPath, List<T> groupLists) throws IOException {
+        Serializer.serialize(outputPath, groupLists); // Salva a lista inteira como um único arquivo.
     }
+
 }
