@@ -24,19 +24,21 @@
 package br.com.minascode.GENESE.combination.lottery;
 
 public enum LotteryGameType {
-    MEGA_SENA(1, 60, 6, 6),
-    LOTO_FACIL(1, 25, 15, 5);
+    MEGA_SENA(1, 60, 6, 6, "Mega Sena"),
+    LOTO_FACIL(1, 25, 15, 5, "Loto Fácil");
 
     private final int minRange;       // Menor número do jogo
     private final int maxRange;       // Maior número do jogo
     private final int selectionSize;  // Quantidade de números escolhidos no jogo
     private final int lineCount;      // Quantidade de linhas no jogo
+    private final String displayName; // Nome amigável do jogo
 
-    LotteryGameType(int minRange, int maxRange, int selectionSize, int lineCount) {
+    LotteryGameType(int minRange, int maxRange, int selectionSize, int lineCount, String displayName) {
         this.minRange = minRange;
         this.maxRange = maxRange;
         this.selectionSize = selectionSize;
         this.lineCount = lineCount;
+        this.displayName = displayName;
     }
 
     public int getMinRange() {
@@ -53,6 +55,11 @@ public enum LotteryGameType {
 
     public int getLineCount() {
         return lineCount;
+    }
+    
+    @Override
+    public String toString() {
+        return displayName;
     }
 }
 

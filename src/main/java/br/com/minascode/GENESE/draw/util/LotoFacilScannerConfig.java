@@ -29,7 +29,7 @@ public class LotoFacilScannerConfig implements GameScannerConfig {
 
     @Override
     public String getSheetPath() {
-        return DefineDirectory.getCefDirectory() + "Lotofácil.xlsx";
+        return DefineDirectory.getCefDirectory() + "Lotofacil.xlsx";
     }
 
     @Override

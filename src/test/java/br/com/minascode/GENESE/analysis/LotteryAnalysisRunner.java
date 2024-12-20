@@ -68,11 +68,11 @@ public class LotteryAnalysisRunner {
 
 	public static void main(String[] args) {
 
-//		loadLotoFacilGames();		
-//		loadClasses(LotoFacil.class, lotoFacilDraws, lotoFacilGameType);
+		loadLotoFacilGames();		
+		loadClasses(LotoFacil.class, lotoFacilDraws, lotoFacilGameType);
 		
-		loadMegaSenaGames();
-		loadClasses(MegaSena.class, megaSenaDraws, megaSenaGameType);
+//		loadMegaSenaGames();
+//		loadClasses(MegaSena.class, megaSenaDraws, megaSenaGameType);
 
 		cubicTest.printAnalysis();
 		System.out.println();
